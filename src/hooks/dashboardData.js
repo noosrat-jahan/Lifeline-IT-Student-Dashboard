@@ -1,17 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
 
 export const dashboardData = () => {
   return useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
       const res = await axios.get(
-        `https://lifelineit-back.onrender.com/api/dashboard`,
+        import.meta.env.VITE_API_URL + `/api/dashboard`,
         {
           withCredentials: true,
         }
-      );
-      return res.data;
+      )
+      console.log(res)
+      return res.data
     },
-  });
-};
+  })
+}

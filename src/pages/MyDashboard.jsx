@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { dashboardData } from "../hooks/DashboardData";
-import { MdOutlineDone, MdOutlineShoppingCart } from "react-icons/md";
-import { FaBookOpen, FaDollarSign } from "react-icons/fa";
-import { RxStopwatch } from "react-icons/rx";
-import { TiTick } from "react-icons/ti";
+import React, { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
+import { dashboardData } from "../hooks/DashboardData"
+import { MdOutlineDone, MdOutlineShoppingCart } from "react-icons/md"
+import { FaBookOpen, FaDollarSign } from "react-icons/fa"
+import { RxStopwatch } from "react-icons/rx"
+import { TiTick } from "react-icons/ti"
 
 const MyDashboard = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error, refetch } = dashboardData()
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
   return (
-    <div
-      className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-    >
+    <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div className="bg-[#1B3E69] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
         <div className="bg-gray-300 rounded-full p-4">
           <MdOutlineShoppingCart />
@@ -43,7 +41,7 @@ const MyDashboard = () => {
         <h3 className="text-xl uppercase text-gray-50">Pending Courses</h3>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MyDashboard;
+export default MyDashboard

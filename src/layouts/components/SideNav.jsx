@@ -1,70 +1,70 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import logo from "../../assets/Website Logo.png";
-import MyCourses from "../../pages/MyCourses";
+import React from "react"
+import { Link, Outlet } from "react-router-dom"
+import logo from "../../assets/Website Logo.png"
+import MyCourses from "../../pages/MyCourses"
 import {
   MdOutlineHome,
   MdOutlineInsertComment,
   MdOutlineShoppingCart,
-} from "react-icons/md";
-import { RiGraduationCapFill } from "react-icons/ri";
-import { FaRegClock, FaRegComment, FaUserGraduate } from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
+} from "react-icons/md"
+import { RiGraduationCapFill } from "react-icons/ri"
+import { FaRegClock, FaRegComment, FaUserGraduate } from "react-icons/fa"
+import { FiHome } from "react-icons/fi"
 
-import student from "../../assets/student.jpg";
+import student from "../../assets/student.jpg"
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { dashboardData } from "../../hooks/DashboardData";
-import { CiLock } from "react-icons/ci";
-import { FaArrowRightFromBracket } from "react-icons/fa6";
-import { IoMdLock } from "react-icons/io";
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import Menu from "@mui/material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
+import Container from "@mui/material/Container"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
+import MenuItem from "@mui/material/MenuItem"
+import AdbIcon from "@mui/icons-material/Adb"
+import axios from "axios"
+import Swal from "sweetalert2"
+import { dashboardData } from "../../hooks/DashboardData"
+import { CiLock } from "react-icons/ci"
+import { FaArrowRightFromBracket } from "react-icons/fa6"
+import { IoMdLock } from "react-icons/io"
 
 const SideNav = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error, refetch } = dashboardData()
 
   const handleLogout = async () => {
-    await axios.post(`https://lifelineit-back.onrender.com/api/auth/logout`, {
+    await axios.post(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
       withCredentials: true,
-    });
+    })
 
     Swal.fire({
       title: `${data.name} is successfully logged out`,
       icon: "success",
       draggable: true,
-    });
-  };
+    })
+  }
   return (
     <div>
       {/* <!-- Navigation --> */}
@@ -80,10 +80,16 @@ const SideNav = () => {
             </Link> */}
             <Link to="https://lifelineit-d5cbf.web.app/about">About Us</Link>
 
-            <Link to="https://lifelineit-d5cbf.web.app/success-story">Success Story</Link>
-            <Link to="https://lifelineit-d5cbf.web.app/student-review">Student Reviews</Link>
+            <Link to="https://lifelineit-d5cbf.web.app/success-story">
+              Success Story
+            </Link>
+            <Link to="https://lifelineit-d5cbf.web.app/student-review">
+              Student Reviews
+            </Link>
             <Link to="#">Events</Link>
-            <Link to="https://lifelineit-d5cbf.web.app/contact">Contact Us</Link>
+            <Link to="https://lifelineit-d5cbf.web.app/contact">
+              Contact Us
+            </Link>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -264,13 +270,13 @@ const SideNav = () => {
           </div>
         </aside>
 
-       <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl p-8">
-         {/* page wise content */}
-        <Outlet></Outlet>
-       </div>
+        <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl p-8">
+          {/* page wise content */}
+          <Outlet></Outlet>
+        </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SideNav;
+export default SideNav
