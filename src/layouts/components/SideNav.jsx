@@ -80,15 +80,21 @@ const SideNav = () => {
             </Link> */}
             <Link to="https://lifelineit-d5cbf.web.app/about">About Us</Link>
 
-            <Link to="https://lifelineit-d5cbf.web.app/success-story">Success Story</Link>
-            <Link to="https://lifelineit-d5cbf.web.app/student-review">Student Reviews</Link>
+            <Link to="https://lifelineit-d5cbf.web.app/success-story">
+              Success Story
+            </Link>
+            <Link to="https://lifelineit-d5cbf.web.app/student-review">
+              Student Reviews
+            </Link>
             <Link to="#">Events</Link>
-            <Link to="https://lifelineit-d5cbf.web.app/contact">Contact Us</Link>
+            <Link to="https://lifelineit-d5cbf.web.app/contact">
+              Contact Us
+            </Link>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {/* <Avatar alt={data.name} src="/static/images/avatar/2.jpg" /> */}
+                  <Avatar alt="" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -109,31 +115,27 @@ const SideNav = () => {
               >
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: "center" }}>
-                    <li>
-                      <Link
-                        to="/profile"
-                        className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
-                      >
-                        <FaUserGraduate /> My Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/"
-                        className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
-                      >
-                        <IoMdLock /> Change Password
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/"
-                        onClick={handleLogout}
-                        className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
-                      >
-                        <FaArrowRightFromBracket /> Logout
-                      </Link>
-                    </li>
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                    >
+                      <FaUserGraduate /> My Profile
+                    </Link>
+
+                    <Link
+                      to="/"
+                      className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                    >
+                      <IoMdLock /> Change Password
+                    </Link>
+
+                    <Link
+                      to="/"
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                    >
+                      <FaArrowRightFromBracket /> Logout
+                    </Link>
                   </Typography>
                 </MenuItem>
               </Menu>
@@ -264,10 +266,22 @@ const SideNav = () => {
           </div>
         </aside>
 
-       <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl p-8">
-         {/* page wise content */}
-        <Outlet></Outlet>
-       </div>
+        <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl p-8">
+          {/* page wise content */}
+          {isLoading ? (
+            <div>
+              <div className="flex justify-center items-center h-40">
+                <div className="flex space-x-2">
+                  <div className="w-4 h-4 rounded-full bg-blue-400 animate-bounce"></div>
+                  <div className="w-4 h-4 rounded-full bg-blue-500 animate-bounce [animation-delay:.2s]"></div>
+                  <div className="w-4 h-4 rounded-full bg-blue-600 animate-bounce [animation-delay:.4s]"></div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Outlet></Outlet>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import MyCourses from '../pages/MyCourses';
 import MyOrders from '../pages/MyOrders';
 import Notices from '../pages/Notices';
 import Profile from '../pages/Profile';
+import CourseDetails from '../pages/CourseDetails';
 
 const Router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const Router = createBrowserRouter([
         {
             path: "/courses",
             element: <MyCourses></MyCourses>
+        },
+        {
+            path: "/course-details",
+            element: <CourseDetails></CourseDetails>
         },
         {
             path: "/orders",
