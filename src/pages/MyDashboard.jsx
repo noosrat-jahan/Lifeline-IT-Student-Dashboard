@@ -12,8 +12,15 @@ const MyDashboard = () => {
 
   console.log(data, isLoading, error)
   return (
+<<<<<<< HEAD
     <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div className="bg-[#1B3E69] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
+=======
+    <div
+      className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+    >
+      {/* <div className="bg-[#1B3E69] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
+>>>>>>> d3b04b81b9ed96a5fff42e1bba73e16b40d5179d
         <div className="bg-gray-300 rounded-full p-4">
           <MdOutlineShoppingCart />
         </div>
@@ -39,7 +46,7 @@ const MyDashboard = () => {
           {data.courseStatus.pendingCourses.length}
         </h2>
         <h3 className="text-xl uppercase text-gray-50">Pending Courses</h3>
-      </div>
+      </div> */}
     </div>
   )
 }
