@@ -11,7 +11,7 @@ export const dashboardData = () => {
           withCredentials: true,
         }
       )
-      console.log(res)
+      
       return res.data
     },
   })

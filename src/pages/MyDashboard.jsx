@@ -15,14 +15,14 @@ const MyDashboard = () => {
     <div
       className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
     >
-      {/* <div className="bg-[#1B3E69] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
+      <div className="bg-[#1B3E69] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
         <div className="bg-gray-300 rounded-full p-4">
           <MdOutlineShoppingCart />
         </div>
         <h2 className="font-bold text-2xl text-white">
-          {data.totalCourses.length}
+          {data.totalOrders.length}
         </h2>
-        <h3 className="text-xl uppercase text-gray-50">Total Courses</h3>
+        <h3 className="text-xl uppercase text-gray-50">Total Orders</h3>
       </div>
       <div className=" bg-[#37abd8] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
         <div className="bg-gray-300 rounded-full p-4">
@@ -31,17 +31,17 @@ const MyDashboard = () => {
         <h2 className="font-bold text-2xl text-white">
           {data.courseStatus.approvedCourses.length}
         </h2>
-        <h3 className="text-xl uppercase text-gray-50"> Approved Courses</h3>
+        <h3 className="text-xl uppercase text-gray-50"> Total Courses</h3>
       </div>
       <div className="bg-[#F7931E] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
         <div className="bg-gray-300 rounded-full p-4">
           <RxStopwatch />
         </div>
         <h2 className="font-bold text-2xl text-white">
-          {data.courseStatus.pendingCourses.length}
+          {data.totalPaid || 0}
         </h2>
-        <h3 className="text-xl uppercase text-gray-50">Pending Courses</h3>
-      </div> */}
+        <h3 className="text-xl uppercase text-gray-50">Verified Paid</h3>
+      </div>
     </div>
   )
 }
