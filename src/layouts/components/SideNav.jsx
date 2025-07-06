@@ -150,7 +150,7 @@ const SideNav = () => {
           <div className="flex-1 bg-gradient-to-r from-brand to-[#d729ff] text-white  flex flex-col justify-center">
             <h1 className="text-3xl font-bold">Where Learners Meet Success</h1>
             <p className="text-[#ffc25a] font-bold text-lg mt-3">
-              40K+ Students    $3.5M+ Earned*
+              40K+ Students $3.5M+ Earned*
             </p>
           </div>
 
@@ -268,9 +268,6 @@ const SideNav = () => {
 
         <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl p-8">
           {/* page wise content */}
-<<<<<<< HEAD
-          <Outlet></Outlet>
-=======
           {isLoading ? (
             <div>
               <div className="flex justify-center items-center h-40">
@@ -284,7 +281,6 @@ const SideNav = () => {
           ) : (
             <Outlet></Outlet>
           )}
->>>>>>> d3b04b81b9ed96a5fff42e1bba73e16b40d5179d
         </div>
       </div>
     </div>
