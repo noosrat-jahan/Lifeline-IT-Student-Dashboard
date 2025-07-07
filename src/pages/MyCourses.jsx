@@ -13,23 +13,33 @@ const MyCourses = () => {
 
   console.log(data.courseStatus.approvedCourses);
   const AllCourse = [];
-  useEffect(() => {
+ useEffect(() => {
+  const fetchCourses = async () => {
     if (data && data.courseStatus?.approvedCourses) {
-      setApprovedCourse(data.courseStatus.approvedCourses);
+      const approved = data.courseStatus.approvedCourses;
+      setApprovedCourse(approved);
+
+      const allCourses = [];
+
+      for (const appcourse of approved) {
+        try {
+          const res = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/courses/${appcourse.courseRoute}`
+          );
+          allCourses.push(res.data);
+        } catch (error) {
+          console.error("Error fetching a course:", error);
+        }
+      }
+
+      setCourses(allCourses);
     }
+  };
 
-    approvedCourse.map(async (appcourse) => {
-      const res = await axios.get(
-        import.meta.env.VITE_API_URL + `/api/courses/${appcourse.courseRoute}`
-      );
-      console.log(res.data);
-      AllCourse.push(res.data);
-    });
-    console.log(AllCourse);
-    setCourses(AllCourse);
-    console.log("courses", courses);
-  }, [data]);
+  fetchCourses();
+}, [data]);
 
+console.log("AllCourse",courses);
   return (
     <div>
       {/* <!-- Main Content --> */}
@@ -38,11 +48,11 @@ const MyCourses = () => {
           <h2 class="text-2xl font-bold mb-4 text-left text-blue-700">
             My Courses
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {AllCourse.map((course) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {courses.map((course) => (
               <div
                 key={course._id}
-                className="bg-white rounded-2xl shadow-md overflow-hidden max-w-sm mx-auto flex flex-col items-center"
+                className="bg-white rounded-2xl shadow-md overflow-hidden max-w-sm mx-auto flex flex-col items-center justify-center"
               >
                 {/* Thumbnail */}
                 <img
@@ -65,7 +75,7 @@ const MyCourses = () => {
 
                   {/* Details Button */}
                   <Link to="/course-details">
-                    <button className="flex items-center text-blue-600 font-medium hover:underline">
+                    <button className="flex w-full items-center justify-center text-blue-600 font-medium hover:underline">
                       Details
                       <BsArrowRight className="ml-2 w-4 h-4" />
                     </button>

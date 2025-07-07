@@ -203,14 +203,7 @@ const SideNav = () => {
                   <RiGraduationCapFill /> My Courses
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="#"
-                  className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
-                >
-                  <FaRegClock /> My Recurring Orders
-                </Link>
-              </li>
+             
 
               <li>
                 <Link
@@ -221,6 +214,15 @@ const SideNav = () => {
                   <span className="ml-auto text-xs bg-red-300 text-red-900 font-bold px-2 py-0.5 rounded-full">
                     5
                   </span>
+                </Link>
+              </li>
+
+               <li>
+                <Link
+                  to="#"
+                  className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                >
+                  <FaRegClock /> Download Certificate
                 </Link>
               </li>
 
