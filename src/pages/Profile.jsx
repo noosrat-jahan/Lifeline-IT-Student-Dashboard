@@ -23,7 +23,7 @@ const Profile = () => {
   return (
     <div>
       <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
-        <div className="flex flex-col md:flex-row gap-8 ">
+        <div className="flex flex-col md:flex-row gap-14 ">
           {/* Profile Picture */}
           <div className="flex-shrink-0">
             <img
@@ -44,7 +44,7 @@ const Profile = () => {
                 type="text"
                 value={user.name}
                 readOnly
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
+                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
               />
             </div>
 
@@ -57,7 +57,7 @@ const Profile = () => {
                 type="email"
                 value={user.email}
                 readOnly
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
+                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
               />
             </div>          
 
@@ -67,7 +67,7 @@ const Profile = () => {
               </label>
               <input
                 type="password"
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
+                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
           </div>
