@@ -75,7 +75,7 @@ console.log("AllCourse",courses);
                   </p>
 
                   {/* Details Button */}
-                  <Link to="/course-details">
+                  <Link to={`/course-details/${course.route}`}>
                     <button className="flex w-full items-center justify-center text-blue-600 font-medium hover:underline">
                       Details
                       <BsArrowRight className="ml-2 w-4 h-4" />

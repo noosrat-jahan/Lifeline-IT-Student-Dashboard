@@ -44,7 +44,7 @@ const Profile = () => {
                 type="text"
                 value={user.name}
                 readOnly
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
               />
             </div>
 
@@ -57,48 +57,12 @@ const Profile = () => {
                 type="email"
                 value={user.email}
                 readOnly
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
               />
-            </div>
+            </div>          
 
-            {/* Account No */}
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Account Number
-              </label>
-              <input
-                type="text"
-                //   value={user.accountNo}
-
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-blue-700 font-semibold "
-              />
-            </div>
-
-            {/* Transaction ID */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Transaction ID
-              </label>
-              <input
-                type="text"
-                //   value={user.transactionId}
-
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-green-700 font-semibold"
-              />
-            </div>
-
-            {/* password */}
-            <div id="password" ref={passwordRef}>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="mt-5 block text-sm font-medium text-gray-600 mb-1">
                 Confirm Password
               </label>
               <input

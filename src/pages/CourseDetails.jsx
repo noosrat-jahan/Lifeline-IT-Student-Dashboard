@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import course from "../assets/course.jpg";
 
@@ -9,7 +9,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import useCourseDetails from "@/hooks/useCourseDetails";
 
 const CourseDetails = () => {
   const questions = [
@@ -23,10 +25,15 @@ const CourseDetails = () => {
       question: "Why use Tailwind CSS?",
       answer: "click here to join",
     },
-  
   ];
 
-  const [showDetails, setShowDetails] = useState(false);
+  const { route } = useParams();
+  console.log(route);
+
+  // const [instructor, setInstructor] = useState([])
+  const { course, loading, error } = useCourseDetails(route);
+  // setInstructor(course.instructors)
+  console.log(course?.instructors);
   return (
     <div className="text-left space-y-10">
       <h2 className="mb-4 text-2xl text-left font-semibold leading-tight">
@@ -71,12 +78,15 @@ const CourseDetails = () => {
 
       <h1 className="font-bold text-lg">Zoom Live Support</h1>
 
-      <Accordion type="single" collapsible className="w-full shadow-lg p-4 mx-auto">
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full shadow-lg p-4 mx-auto"
+      >
         {questions.map((item) => (
           <AccordionItem value={item.id} key={item.id}>
             <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium py-4">
               {item.question}
-              
             </AccordionTrigger>
             <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
               <Link to="">{item.answer}</Link>
@@ -86,18 +96,18 @@ const CourseDetails = () => {
       </Accordion>
 
       <h1 className="font-bold text-lg">Zoom Live Class Link</h1>
-       <Accordion type="single" collapsible className="w-full p-4 mx-auto">
-      {questions.map((item) => (
-        <AccordionItem value={item.id} key={item.id}>
-          <AccordionTrigger className="text-left text-lg font-medium py-4">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-            {item.answer}
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+      <Accordion type="single" collapsible className="w-full p-4 mx-auto">
+        {questions.map((item) => (
+          <AccordionItem value={item.id} key={item.id}>
+            <AccordionTrigger className="text-left text-lg font-medium py-4">
+              {item.question}
+            </AccordionTrigger>
+            <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
+              {item.answer}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   );
 };
