@@ -28,10 +28,11 @@ import MenuItem from "@mui/material/MenuItem"
 import AdbIcon from "@mui/icons-material/Adb"
 import axios from "axios"
 import Swal from "sweetalert2"
-import { dashboardData } from "../../hooks/DashboardData"
+
 import { CiLock } from "react-icons/ci"
 import { FaArrowRightFromBracket } from "react-icons/fa6"
 import { IoMdLock } from "react-icons/io"
+import { dashboardData } from "@/hooks/dashboardData"
 
 const SideNav = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -249,7 +250,7 @@ const SideNav = () => {
               </li>
               <li>
                 <Link
-                  to="/"
+                  to="/profile#password"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <IoMdLock /> Change Password
