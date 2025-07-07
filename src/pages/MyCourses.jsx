@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import course from "../assets/course.jpg";
-import { dashboardData } from "../hooks/DashboardData";
+
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { HiH1 } from "react-icons/hi2";
 import axios from "axios";
+import { dashboardData } from "@/hooks/dashboardData";
 const MyCourses = () => {
   const { data, isLoading, error, refetch } = dashboardData();
 

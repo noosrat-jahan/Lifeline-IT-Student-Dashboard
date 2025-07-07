@@ -148,7 +148,7 @@ const SideNav = () => {
       {/* <!-- Hero Banner --> */}
       <section className="bg-gradient-to-b from-[#c2b7ff] to-white py-10">
         <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[370px] lg:min-h-[240px] ">
-          <div className="flex-1 bg-gradient-to-r from-brand to-[#d729ff] text-white  flex flex-col justify-center">
+          <div className="flex-1 bg-gradient-to-l from-[#0B254C] via-[#266ea1] to-[#041630] text-white  flex flex-col justify-center">
             <h1 className="text-3xl font-bold">Where Learners Meet Success</h1>
             <p className="text-[#ffc25a] font-bold text-lg mt-3">
               40K+ Students $3.5M+ Earned*
