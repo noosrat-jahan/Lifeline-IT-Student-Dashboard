@@ -1,77 +1,80 @@
-import React from "react"
-import { Link, Outlet } from "react-router-dom"
-import logo from "../../assets/Website Logo.png"
-import MyCourses from "../../pages/MyCourses"
+import React from "react";
+import { Link, Outlet } from "react-router-dom";
+import logo from "../../assets/Website Logo.png";
+import MyCourses from "../../pages/MyCourses";
 import {
   MdOutlineHome,
   MdOutlineInsertComment,
   MdOutlineShoppingCart,
-} from "react-icons/md"
-import { RiGraduationCapFill } from "react-icons/ri"
-import { FaRegClock, FaRegComment, FaUserGraduate } from "react-icons/fa"
-import { FiHome } from "react-icons/fi"
+} from "react-icons/md";
+import { RiGraduationCapFill } from "react-icons/ri";
+import { FaRegClock, FaRegComment, FaUserGraduate } from "react-icons/fa";
+import { FiHome } from "react-icons/fi";
 
-import student from "../../assets/student.jpg"
+import student from "../../assets/student.jpg";
 
-import AppBar from "@mui/material/AppBar"
-import Box from "@mui/material/Box"
-import Toolbar from "@mui/material/Toolbar"
-import IconButton from "@mui/material/IconButton"
-import Typography from "@mui/material/Typography"
-import Menu from "@mui/material/Menu"
-import MenuIcon from "@mui/icons-material/Menu"
-import Container from "@mui/material/Container"
-import Avatar from "@mui/material/Avatar"
-import Button from "@mui/material/Button"
-import Tooltip from "@mui/material/Tooltip"
-import MenuItem from "@mui/material/MenuItem"
-import AdbIcon from "@mui/icons-material/Adb"
-import axios from "axios"
-import Swal from "sweetalert2"
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-import { CiLock } from "react-icons/ci"
-import { FaArrowRightFromBracket } from "react-icons/fa6"
-import { IoMdLock } from "react-icons/io"
-import { dashboardData } from "@/hooks/dashboardData"
+import { CiLock } from "react-icons/ci";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { IoMdLock } from "react-icons/io";
+import { dashboardData } from "@/hooks/dashboardData";
 
 const SideNav = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null)
-  const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget)
-  }
+    setAnchorElNav(event.currentTarget);
+  };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget)
-  }
+    setAnchorElUser(event.currentTarget);
+  };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
-  }
+    setAnchorElNav(null);
+  };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
-  }
+    setAnchorElUser(null);
+  };
 
-  const { data, isLoading, error, refetch } = dashboardData()
+  const { data, isLoading, error, refetch } = dashboardData();
 
   const handleLogout = async () => {
     await axios.post(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
       withCredentials: true,
-    })
+    });
 
     Swal.fire({
       title: `${data.name} is successfully logged out`,
       icon: "success",
       draggable: true,
-    })
-  }
+    });
+  };
   return (
     <div>
       {/* <!-- Navigation --> */}
       <header className="sticky top-0 z-50 bg-white shadow">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center h-16 px-4">
-          <img src={logo} alt="SR DREAM IT Logo" className="w-1/2 lg:w-1/6" />
+          <Link to="/dashboard">
+            <img src={logo} alt="SR DREAM IT Logo" className="w-1/2 lg:w-1/6" />
+          </Link>
+
           <nav className="hidden md:flex items-center space-x-4 text-sm">
             {/* <Link
               to="/"
@@ -204,7 +207,6 @@ const SideNav = () => {
                   <RiGraduationCapFill /> My Courses
                 </Link>
               </li>
-             
 
               <li>
                 <Link
@@ -218,7 +220,7 @@ const SideNav = () => {
                 </Link>
               </li>
 
-               <li>
+              <li>
                 <Link
                   to="#"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
@@ -287,7 +289,7 @@ const SideNav = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SideNav
+export default SideNav;

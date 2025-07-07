@@ -70,6 +70,10 @@ const Profile = () => {
                 className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
+              <input
+                type="submit"
+                className="w-1/2 bg-[#285599] border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-white font-medium "
+              />
           </div>
         </div>
       </div>
