@@ -35,8 +35,8 @@ const CourseDetails = () => {
   // setInstructor(course.instructors)
   const instructors = course?.instructors;
   console.log(instructors);
-  const liveSupport = course?.links[0].zoom
-  const liveClasses = course?.links[0].fb
+  const liveSupport = course?.links[0].fb
+  const liveClasses = course?.links[0].zoom
   console.log(liveSupport)
   if (loading)
     return <p className="text-center mt-10">Loading course details...</p>;

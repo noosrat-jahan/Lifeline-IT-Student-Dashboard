@@ -33,6 +33,7 @@ import { CiLock } from "react-icons/ci";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { IoMdLock } from "react-icons/io";
 import { dashboardData } from "@/hooks/dashboardData";
+import useNotice from "@/hooks/useNotice";
 
 const SideNav = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -54,6 +55,7 @@ const SideNav = () => {
   };
 
   const { data, isLoading, error, refetch } = dashboardData();
+  const { notices, loading } = useNotice();
 
   const handleLogout = async () => {
     await axios.post(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
@@ -127,7 +129,7 @@ const SideNav = () => {
                     </Link>
 
                     <Link
-                      to="/"
+                      to="/profile"
                       className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                     >
                       <IoMdLock /> Change Password
@@ -215,7 +217,7 @@ const SideNav = () => {
                 >
                   <MdOutlineInsertComment /> Notice Board
                   <span className="ml-auto text-xs bg-red-300 text-red-900 font-bold px-2 py-0.5 rounded-full">
-                    5
+                    {notices.length}
                   </span>
                 </Link>
               </li>
