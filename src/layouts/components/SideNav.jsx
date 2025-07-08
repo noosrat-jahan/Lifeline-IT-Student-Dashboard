@@ -61,7 +61,7 @@ const SideNav = () => {
     });
 
     Swal.fire({
-      title: `${data.name} is successfully logged out`,
+      title: `${data?.name} is successfully logged out`,
       icon: "success",
       draggable: true,
     });
@@ -164,7 +164,7 @@ const SideNav = () => {
           </div>
 
           <div className="absolute left-40 bottom-4 lg:bottom-8 text-gray-800">
-            {/* <div className="text-xl font-semibold">{data.name}</div> */}
+            <div className="text-xl font-semibold text-white mb-2">{data?.name}</div>
             <div className="text-sm text-gray-100">SRD - 129103</div>
           </div>
 
@@ -180,7 +180,7 @@ const SideNav = () => {
         <aside className="lg:w-1/4 w-full">
           <div className="bg-white shadow-card rounded-xl p-6">
             <div className="uppercase text-sm text-gray-500 mb-4">
-              Welcome, <strong>MD ABU SAYEED</strong>
+              Welcome, <strong>{data?.name}</strong>
             </div>
             <ul className="space-y-2">
               <li>
