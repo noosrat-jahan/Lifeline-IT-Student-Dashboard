@@ -71,11 +71,11 @@ const SideNav = () => {
       {/* <!-- Navigation --> */}
       <header className="sticky top-0 z-50 bg-white shadow">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center h-16 px-4">
-          <Link to="/dashboard">
-            <img src={logo} alt="SR DREAM IT Logo" className="w-1/2 lg:w-1/6" />
+          <Link to="/dashboard" className="w-1/2 md:w-1/4">
+            <img src={logo} alt="SR DREAM IT Logo" className="w-full lg:w-1/3" />
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-4 text-sm">
+          <nav className="hidden md:flex items-center justify-evenly space-x-4 text-sm">
             {/* <Link
               to="/"
               className="relative font-semibold text-brand after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-[2px] after:bg-brand"

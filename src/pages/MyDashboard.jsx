@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { dashboardData } from "../hooks/DashboardData"
+
 import { MdOutlineDone, MdOutlineShoppingCart } from "react-icons/md"
-import { FaBookOpen, FaDollarSign } from "react-icons/fa"
+import { FaBookOpen, FaBorderAll, FaDollarSign } from "react-icons/fa"
 import { RxStopwatch } from "react-icons/rx"
 import { TiTick } from "react-icons/ti"
+import { dashboardData } from "@/hooks/dashboardData"
 
 const MyDashboard = () => {
   const { data, isLoading, error, refetch } = dashboardData()
@@ -26,7 +27,7 @@ const MyDashboard = () => {
       </div>
       <div className=" bg-[#37abd8] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
         <div className="bg-gray-300 rounded-full p-4">
-          <MdOutlineDone />
+          <FaBorderAll />
         </div>
         <h2 className="font-bold text-2xl text-white">
           {data.courseStatus.approvedCourses.length}
@@ -35,7 +36,7 @@ const MyDashboard = () => {
       </div>
       <div className="bg-[#F7931E] cursor-pointer rounded-xl p-5 space-y-4 flex flex-col items-center h-fit hover:scale-105 transition-all duration-1000">
         <div className="bg-gray-300 rounded-full p-4">
-          <RxStopwatch />
+          <MdOutlineDone />
         </div>
         <h2 className="font-bold text-2xl text-white">
           {data.totalPaid || 0}
