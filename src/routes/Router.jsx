@@ -9,6 +9,8 @@ import Notices from "../pages/Notices";
 import Profile from "../pages/Profile";
 import CourseDetails from "../pages/CourseDetails";
 import Modules from "@/pages/Modules";
+import Certificate from "@/pages/Certificate";
+import RegistartionCard from "@/pages/RegistartionCard";
 
 const Router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const Router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile></Profile>,
+      },
+      {
+        path: "/certificate",
+        element: <Certificate></Certificate>,
+      },
+      {
+        path: "/registration-card",
+        element: <RegistartionCard></RegistartionCard>,
       },
     ],
   },

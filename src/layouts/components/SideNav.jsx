@@ -222,7 +222,7 @@ const SideNav = () => {
 
               <li>
                 <Link
-                  to="#"
+                  to="/certificate"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <FaRegClock /> Download Certificate
@@ -231,7 +231,7 @@ const SideNav = () => {
 
               <li>
                 <Link
-                  to="#"
+                  to="/registration-card"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <FaRegComment /> Registration Card
