@@ -116,6 +116,11 @@ const CourseDetails = () => {
           </AccordionItem>
         ))}
       </Accordion>
+
+      <h1 className="font-bold text-lg pb-4">Course Modules</h1>
+      <Link to={`/course-details/${course.route}/modules`}>
+      <button className="bg-[#0B254C] px-4 py-2 rounded-lg text-white">Modules</button>
+      </Link>
     </div>
   );
 };

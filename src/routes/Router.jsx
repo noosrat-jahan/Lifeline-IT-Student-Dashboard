@@ -8,6 +8,7 @@ import MyOrders from "../pages/MyOrders";
 import Notices from "../pages/Notices";
 import Profile from "../pages/Profile";
 import CourseDetails from "../pages/CourseDetails";
+import Modules from "@/pages/Modules";
 
 const Router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const Router = createBrowserRouter([
       {
         path: "/courses",
         element: <MyCourses></MyCourses>,
+      },
+      {
+        path: "/course-details/:route/modules",
+        element: <Modules></Modules>,
       },
       {
         path: "/course-details/:route",
