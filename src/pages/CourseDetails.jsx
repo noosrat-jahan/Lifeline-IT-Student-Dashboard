@@ -35,7 +35,7 @@ const CourseDetails = () => {
   console.log(instructors);
   const liveSupport = course?.links[0].fb
   const liveClasses = course?.links[0].zoom
-  console.log(liveSupport)
+  console.log(course)
   if (loading)
     return <p className="text-center mt-10">Loading course details...</p>;
   return (
@@ -45,12 +45,12 @@ const CourseDetails = () => {
       </h2>
 
       <div>
-        <h1 className="font-bold text-lg">Course & Batch</h1>
-        <p>
-          <span>Course:</span> Lorem ipsum dolor sit amet.
+        {/* <h1 className="font-bold text-lg">Course & Batch</h1> */}
+        <p className="text-xl font-bold text-[#0B254C] mb-4 ">
+          <span>Course:</span> {course.title}
         </p>
-        <p>
-          <span>Batch:</span> Lorem ipsum dolor sit amet.
+        <p className="text-xl font-bold text-[#0B254C]">
+           {course.subtitle}
         </p>
       </div>
 
@@ -116,7 +116,7 @@ const CourseDetails = () => {
       </Accordion>
 
       <h1 className="font-bold text-lg pb-4">Course Modules</h1>
-      <Link to={`/course-details/${course.route}/modules`}>
+      <Link to={`/courses/${course.route}/modules`}>
       <button className="bg-[#0B254C] px-4 py-2 rounded-lg text-white">Modules</button>
       </Link>
     </div>

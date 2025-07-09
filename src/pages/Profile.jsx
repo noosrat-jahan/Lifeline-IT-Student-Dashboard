@@ -10,20 +10,23 @@ const Profile = () => {
     image: "https://via.placeholder.com/150", // তোমার প্রোফাইল ছবি URL
   };
 
-  const passwordRef = useRef(null);
-  const location = useLocation();
+  // const passwordRef = useRef(null);
+  // const location = useLocation();
 
-  // Step 2: যখন URL-এ #password থাকে, তখন scroll করো
-  useEffect(() => {
-    if (location.hash === "#password" && passwordRef.current) {
-      passwordRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-      passwordRef.current.focus();
-    }
-  }, [location]);
+  // // Step 2: যখন URL-এ #password থাকে, তখন scroll করো
+  // useEffect(() => {
+  //   if (location.hash === "#password" && passwordRef.current) {
+  //     passwordRef.current.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "center",
+  //     });
+  //     passwordRef.current.focus();
+  //   }
+  // }, [location]);
   return (
     <div>
-      <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
-        <div className="flex flex-col md:flex-row gap-14 ">
+      <div className="max-w-4xl mx-auto  p-6 bg-white rounded-xl shadow-md border border-gray-200">
+        <div className="flex flex-col justify-between md:flex-row gap-14 ">
           {/* Profile Picture */}
           <div className="flex-shrink-0">
             <img
@@ -35,21 +38,8 @@ const Profile = () => {
 
           {/* Info Section */}
           <div className="flex-1 w-full grid grid-cols-1 gap-6 text-left">
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Full Name
-              </label>
-              <input
-                type="text"
-                value={user.name}
-                readOnly
-                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
-              />
-            </div>
-
             {/* Email */}
-            <div>
+            <div className="">
               <label className="block text-sm font-medium text-gray-600 mb-1">
                 Email
               </label>
@@ -57,23 +47,34 @@ const Profile = () => {
                 type="email"
                 value={user.email}
                 readOnly
-                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium cursor-not-allowed"
+                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium cursor-not-allowed"
               />
-            </div>          
-
+            </div>
+            {/* Name */}
             <div>
-              <label className="mt-5 block text-sm font-medium text-gray-600 mb-1">
-                Confirm Password
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Full Name
               </label>
               <input
-                type="password"
+                type="text"
+                defaultValue={user.name}
+                className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium"
+              />
+            </div>
+
+            <div>
+              <label className=" block text-sm font-medium text-gray-600 mb-1">
+                Phone
+              </label>
+              <input
+                type="text"
                 className="w-1/2 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
-              <input
-                type="submit"
-                className="w-1/2 bg-[#285599] border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-white font-medium "
-              />
+            <input
+              type="submit"
+              className="w-1/2 bg-[#285599] border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-white font-medium cursor-pointer"
+            />
           </div>
         </div>
       </div>

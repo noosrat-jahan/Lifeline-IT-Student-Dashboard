@@ -11,6 +11,7 @@ import CourseDetails from "../pages/CourseDetails";
 import Modules from "@/pages/Modules";
 import Certificate from "@/pages/Certificate";
 import RegistartionCard from "@/pages/RegistartionCard";
+import ChangePass from "@/pages/ChangePass";
 
 const Router = createBrowserRouter([
   {
@@ -30,11 +31,11 @@ const Router = createBrowserRouter([
         element: <MyCourses></MyCourses>,
       },
       {
-        path: "/course-details/:route/modules",
+        path: "/courses/:route/modules",
         element: <Modules></Modules>,
       },
       {
-        path: "/course-details/:route",
+        path: "/courses/:route",
         element: <CourseDetails></CourseDetails>,
       },
       {
@@ -48,6 +49,10 @@ const Router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile></Profile>,
+      },
+      {
+        path: "/password-reset",
+        element: <ChangePass></ChangePass>,
       },
       {
         path: "/certificate",
