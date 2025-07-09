@@ -1,27 +1,9 @@
+import useNotice from "@/hooks/useNotice";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Notices = () => {
-  const [notices, setNotices] = useState([]);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchCourse = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/dashboard/notices`
-        );
-        setNotices(res.data);
-        console.log(res.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        // setLoading(false);
-      }
-    };
-
-    fetchCourse();
-  }, []);
-  console.log(notices);
+  const { notices, loading, error } = useNotice();
   return (
     <div className="space-y-4 font-baloo">
       <h2 className="mb-4 text-2xl text-left font-semibold leading-tight">
