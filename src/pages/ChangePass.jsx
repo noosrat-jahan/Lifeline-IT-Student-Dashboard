@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 const ChangePass = () => {
   const user = {
@@ -10,6 +11,9 @@ const ChangePass = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Change Password — Lifeline IT</title>
+      </Helmet>
       <div className="w-1/2 mx-auto  p-6 bg-white rounded-xl shadow-md border border-gray-200">
         <div className="flex flex-col md:flex-row gap-14 ">
           {/* Profile Picture */}

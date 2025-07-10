@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 const MyOrders = () => {
   return (
     <div>
+      <Helmet>
+        <title>My Orders — Lifeline IT</title>
+      </Helmet>
       <div className="container p-2 mx-auto sm:p-4 ">
         <h2 className="mb-4 text-2xl text-left font-semibold leading-tight">
           My Orders
@@ -50,7 +54,6 @@ const MyOrders = () => {
                   </span>
                 </td>
               </tr>
-              
             </tbody>
           </table>
         </div>
