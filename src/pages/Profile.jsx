@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
 const Profile = () => {
@@ -25,6 +26,9 @@ const Profile = () => {
   // }, [location]);
   return (
     <div>
+      <Helmet>
+        <title>My Profile — Lifeline IT</title>
+      </Helmet>
       <div className="max-w-4xl mx-auto  p-6 bg-white rounded-xl shadow-md border border-gray-200">
         <div className="flex flex-col justify-between md:flex-row gap-14 ">
           {/* Profile Picture */}

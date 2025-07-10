@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { HiH1 } from "react-icons/hi2";
 import axios from "axios";
 import { dashboardData } from "@/hooks/dashboardData";
+import { Helmet } from "react-helmet-async";
+
 const MyCourses = () => {
   const { data, isLoading, error, refetch } = dashboardData();
 
@@ -43,6 +45,9 @@ const MyCourses = () => {
 console.log("AllCourse",courses);
   return (
     <div>
+      <Helmet>
+        <title>My Courses — Lifeline IT</title>
+      </Helmet>
       {/* <!-- Main Content --> */}
       <main class="flex-1">
         <div class="">

@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Helmet } from "react-helmet-async";
+
 
 // 🔧 Utility function to extract YouTube video ID
 function getYouTubeVideoId(url) {
@@ -43,72 +45,77 @@ const Modules = () => {
   if (!course?.modules?.length) return <p>No modules found.</p>;
 
   return (
-    <div className="text-left">
-      {course.modules.map((module, index) => {
-        const videoLink = module.videoLink[0].link;
+    <>
+      <Helmet>
+        <title>Course Modules — Lifeline IT</title>
+      </Helmet>
+      <div className="text-left">
+        {course.modules.map((module, index) => {
+          const videoLink = module.videoLink[0].link;
 
-        const videoId = getYouTubeVideoId(videoLink);
-        const firstResource = module.resources?.[0];
+          const videoId = getYouTubeVideoId(videoLink);
+          const firstResource = module.resources?.[0];
 
-        return (
-          <div key={module.id || module.title || index} className="mb-10">
-            {/* Module Title */}
-            <h1 className="text-2xl text-[#0B254C] font-bold">
-              {module.title}
-            </h1>
+          return (
+            <div key={module.id || module.title || index} className="mb-10">
+              {/* Module Title */}
+              <h1 className="text-2xl text-[#0B254C] font-bold">
+                {module.title}
+              </h1>
 
-            {/* Video Embed */}
-            {videoId ? (
-              <div className="mt-5 max-w-3xl mx-auto aspect-video rounded-lg overflow-hidden shadow-lg">
-                <iframe
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  title={`Course Video - ${module.title}`}
-                  className="w-full h-full"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ) : (
-              <p className="text-red-500 mt-5">
-                Invalid or missing video link.
-              </p>
-            )}
+              {/* Video Embed */}
+              {videoId ? (
+                <div className="mt-5 max-w-3xl mx-auto aspect-video rounded-lg overflow-hidden shadow-lg">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    title={`Course Video - ${module.title}`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              ) : (
+                <p className="text-red-500 mt-5">
+                  Invalid or missing video link.
+                </p>
+              )}
 
-            {/* Resources */}
-            <h1 className="text-left my-5 text-2xl text-[#0B254C] font-bold">
-              Resources
-            </h1>
+              {/* Resources */}
+              <h1 className="text-left my-5 text-2xl text-[#0B254C] font-bold">
+                Resources
+              </h1>
 
-            {firstResource ? (
-              <Accordion
-                type="single"
-                collapsible
-                className="w-full shadow-lg p-4 mx-auto"
-              >
-                <AccordionItem value={firstResource.title}>
-                  <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium py-4">
-                    {firstResource.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-                    <a
-                      href={firstResource.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
-                      {firstResource.link}
-                    </a>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            ) : (
-              <p>No resources available.</p>
-            )}
-          </div>
-        );
-      })}
-    </div>
+              {firstResource ? (
+                <Accordion
+                  type="single"
+                  collapsible
+                  className="w-full shadow-lg p-4 mx-auto"
+                >
+                  <AccordionItem value={firstResource.title}>
+                    <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium py-4">
+                      {firstResource.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
+                      <a
+                        href={firstResource.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline"
+                      >
+                        {firstResource.link}
+                      </a>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              ) : (
+                <p>No resources available.</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
