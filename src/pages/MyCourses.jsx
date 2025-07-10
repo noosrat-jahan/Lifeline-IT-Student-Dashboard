@@ -7,42 +7,14 @@ import { HiH1 } from "react-icons/hi2";
 import axios from "axios";
 import { dashboardData } from "@/hooks/dashboardData";
 import { Helmet } from "react-helmet-async";
+import useCourses from "@/hooks/useCourses";
 
 const MyCourses = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { courses, isLoading, error } = useCourses();
 
-  const [approvedCourse, setApprovedCourse] = useState([]);
-  const [courses, setCourses] = useState([]);
+  console.log(courses, isLoading, error);
 
-  console.log(data.courseStatus.approvedCourses);
-  const AllCourse = [];
- useEffect(() => {
-  const fetchCourses = async () => {
-    if (data && data.courseStatus?.approvedCourses) {
-      const approved = data.courseStatus.approvedCourses;
-      setApprovedCourse(approved);
-
-      const allCourses = [];
-
-      for (const appcourse of approved) {
-        try {
-          const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/courses/${appcourse.courseRoute}`
-          );
-          allCourses.push(res.data);
-        } catch (error) {
-          console.error("Error fetching a course:", error);
-        }
-      }
-
-      setCourses(allCourses);
-    }
-  };
-
-  fetchCourses();
-}, [data]);
-
-console.log("AllCourse",courses);
+  
   return (
     <div>
       <Helmet>
@@ -60,14 +32,14 @@ console.log("AllCourse",courses);
                 key={course._id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden max-w-sm mx-auto flex flex-col items-center justify-center"
               >
-                {/* Thumbnail */}
+                
                 <img
                   src={course.thumbnail}
                   alt=""
                   className="w-full h-40 object-cover"
                 />
 
-                {/* Content */}
+                
                 <div className="p-4">
                   <h2 className="text-xl font-semibold text-gray-800">
                     {course.title}
@@ -79,7 +51,7 @@ console.log("AllCourse",courses);
                     Duration: {course.duration}
                   </p>
 
-                  {/* Details Button */}
+                  
                   <Link to={`/courses/${course.route}`}>
                     <button className="flex w-full items-center justify-center text-blue-600 font-medium hover:underline">
                       Details

@@ -10,6 +10,8 @@ import {
 import { RiGraduationCapFill } from "react-icons/ri";
 import { FaRegClock, FaRegComment, FaUserGraduate } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
+import { GrCertificate } from "react-icons/gr";
+import { IoNewspaperOutline } from "react-icons/io5";
 
 import student from "../../assets/student.jpg";
 
@@ -31,7 +33,7 @@ import Swal from "sweetalert2";
 
 import { CiLock } from "react-icons/ci";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
-import { IoMdLock } from "react-icons/io";
+import { IoIosPaper, IoMdLock } from "react-icons/io";
 import { dashboardData } from "@/hooks/dashboardData";
 import useNotice from "@/hooks/useNotice";
 
@@ -136,18 +138,27 @@ const SideNav = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "transparent", // removes hover background
+                    },
+                    padding: 1.5,
+                     // optional: remove default padding if needed
+                  }}
+                >
                   <Typography sx={{ textAlign: "center" }}>
                     <Link
                       to="/profile"
-                      className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                      className="flex items-center gap-2 hover:bg-gray-100 transition-all duration-300 p-2 rounded-md pb-2"
                     >
                       <FaUserGraduate /> My Profile
                     </Link>
 
                     <Link
                       to="/password-reset"
-                      className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                      className="flex items-center gap-2 hover:bg-gray-100 transition-all duration-300  p-2 rounded-md "
                     >
                       <IoMdLock /> Change Password
                     </Link>
@@ -155,7 +166,7 @@ const SideNav = () => {
                     <Link
                       to="/"
                       onClick={handleLogout}
-                      className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                      className="flex items-center gap-2 p-2 hover:bg-gray-100 transition-all duration-300 rounded-md"
                     >
                       <FaArrowRightFromBracket /> Logout
                     </Link>
@@ -243,22 +254,22 @@ const SideNav = () => {
 
               <li>
                 <NavLink
-                  to="/certificate"
+                  to="/registration-card"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
-                  <FaRegClock /> Download Certificate
+                  <IoNewspaperOutline /> Registration Card
+                  <span className="ml-auto text-xs bg-yellow-200 text-yellow-800 font-bold px-2 py-0.5 rounded-full">
+                    0
+                  </span>
                 </NavLink>
               </li>
 
               <li>
                 <NavLink
-                  to="/registration-card"
+                  to="/certificate"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
-                  <FaRegComment /> Registration Card
-                  <span className="ml-auto text-xs bg-yellow-200 text-yellow-800 font-bold px-2 py-0.5 rounded-full">
-                    0
-                  </span>
+                  <GrCertificate /> Download Certificate
                 </NavLink>
               </li>
 
