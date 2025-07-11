@@ -26,7 +26,7 @@ const MyDashboard = () => {
             <MdOutlineShoppingCart />
           </div>
           <h2 className="font-bold text-2xl text-white">
-            {data.totalOrders.length}
+            {data?.totalOrders.length}
           </h2>
           <h3 className="text-xl uppercase text-gray-50">Total Orders</h3>
         </div>
@@ -35,7 +35,7 @@ const MyDashboard = () => {
             <FaBorderAll />
           </div>
           <h2 className="font-bold text-2xl text-white">
-            {data.courseStatus.approvedCourses.length}
+            {data?.courseStatus.approvedCourses.length}
           </h2>
           <h3 className="text-xl uppercase text-gray-50"> Total Courses</h3>
         </div>
@@ -44,7 +44,7 @@ const MyDashboard = () => {
             <MdOutlineDone />
           </div>
           <h2 className="font-bold text-2xl text-white">
-            {data.totalPaid || 0}
+            {data?.totalPaid || 0}
           </h2>
           <h3 className="text-xl uppercase text-gray-50">Verified Paid</h3>
         </div>

@@ -190,7 +190,7 @@ const SideNav = () => {
 
           <div className="absolute left-6 bottom-[4px] lg:left-6 lg:bottom-[12px] w-24 h-24 rounded-full border-4 border-white bg-blue-500 flex items-center justify-center cursor-pointer overflow-hidden shadow shadow-blue-100">
             {/* <i className="fas fa-user text-white text-4xl"></i> */}
-            <img src={student} alt="" className="w-full h-full object-cover" />
+            <img src={data?.image} alt="" className="w-full h-full object-cover" />
           </div>
 
           <div className="absolute left-40 bottom-4 lg:bottom-8 text-gray-800">
@@ -247,7 +247,7 @@ const SideNav = () => {
                 >
                   <MdOutlineInsertComment /> Notice Board
                   <span className="ml-auto text-xs bg-red-300 text-red-900 font-bold px-2 py-0.5 rounded-full">
-                    {notices.length}
+                    {notices?.length}
                   </span>
                 </NavLink>
               </li>

@@ -5,10 +5,7 @@ export default {
   theme: {
   	extend: {
   		fontFamily: {
-  			baloo: [
-  				'Baloo Da 2"',
-  				'cursive'
-  			]
+  			baloo: ['"Baloo Da 2"', 'cursive']
   		},
   		colors: {
   			brand: '#8c2dff',

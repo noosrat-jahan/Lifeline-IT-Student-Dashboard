@@ -17,6 +17,7 @@ const useCourses = () => {
     const fetchCourses = async () => {
       if (data && data.courseStatus?.approvedCourses) {
         const approved = data.courseStatus.approvedCourses;
+        console.log(approved)
         setApprovedCourse(approved);
 
         const allCourses = [];

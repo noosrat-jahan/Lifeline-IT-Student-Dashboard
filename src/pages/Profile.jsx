@@ -13,6 +13,7 @@ const Profile = () => {
 
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
   const navigate = useNavigate();
 
@@ -27,6 +28,9 @@ const Profile = () => {
     });
 
     const data = await res.json();
+    if (data?.data?.url) {
+      setUploadedImageUrl(data.data.url); // ✅ set URL
+    }
     console.log("Image URL:", data.data.url);
   }
 
@@ -49,12 +53,11 @@ const Profile = () => {
             draggable: true,
           });
 
-          setInterval(() => {
+          setTimeout(() => {
             navigate("/");
           }, 3000);
-        }
-        else{
-           Swal.fire({
+        } else {
+          Swal.fire({
             title: `Something went wrong!`,
             icon: "error",
             draggable: true,
@@ -69,172 +72,168 @@ const Profile = () => {
         <title>My Profile — Lifeline IT</title>
       </Helmet>
       <div className="max-w-4xl mx-auto  p-6 bg-white rounded-xl shadow-md border border-gray-200">
-        <div className="flex flex-col justify-center  md:flex-row gap-10">
-          <form onSubmit={handleChangeProfile}>
-            {/* Profile Picture */}
-            <div className="flex-shrink-0">
-              <img
-                src={data?.image}
-                alt="Profile"
-                className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow"
-              />
+        <form
+          onSubmit={handleChangeProfile}
+          className="flex flex-col justify-center  md:flex-row gap-10"
+        >
+          {/* Profile Picture */}
+          <div className="flex-shrink-0 flex flex-col items-center">
+            <img
+              src={uploadedImageUrl || data?.image}
+              alt="Profile"
+              className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow"
+            />
 
-              <h3 className="mt-3 font-bold">{data.name}</h3>
-              <h5 className="text-xs text-gray-700">{data.sid}</h5>
+            <h3 className="mt-3 font-bold">{data.name}</h3>
+            <h5 className="text-xs text-gray-700">{data.sid}</h5>
 
-              {/* <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                  uploadImage(file);
-                }
-              }}
-              className="mt-4 text-sm"
-            /> */}
-
-              <div className="mt-4">
-                <label
-                  htmlFor="imageUpload"
-                  className="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg shadow transition duration-200"
-                >
-                  <FaUpload />
-                </label>
-                <input
-                  id="imageUpload"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      uploadImage(file);
-                    }
-                  }}
-                  className="hidden"
-                />
-              </div>
-            </div>
-
-            {/* Info Section */}
-            <div className="flex-1 w-full grid grid-cols-2 gap-6 text-left">
-              {/* Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  defaultValue={data.name}
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium"
-                />
-              </div>
-
-              {/* Email */}
-              <div className="">
-                <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={data.email}
-                  readOnly
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium cursor-not-allowed"
-                />
-              </div>
-
-              {/* father name  */}
-              <div>
-                <label className=" block text-sm font-medium text-gray-600 mb-1">
-                  Father's Name
-                </label>
-                <input
-                  type="text"
-                  name="fathername"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-                />
-              </div>
-
-              {/* phone  */}
-              <div>
-                <label className=" block text-sm font-medium text-gray-600 mb-1">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-                />
-              </div>
-
-              {/* mother name  */}
-              <div>
-                <label className=" block text-sm font-medium text-gray-600 mb-1">
-                  Mother's Name
-                </label>
-                <input
-                  type="text"
-                  name="mothername"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-                />
-              </div>
-
-              {/* gender */}
-              <div className="flex flex-col space-y-2">
-                <label className="font-semibold text-gray-700">Gender</label>
-
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center space-x-1">
-                    <input
-                      type="radio"
-                      value="Male"
-                      checked={gender === "Male"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio text-blue-600"
-                      name="gender"
-                    />
-                    <span>Male</span>
-                  </label>
-
-                  <label className="flex items-center space-x-1">
-                    <input
-                      type="radio"
-                      value="Female"
-                      checked={gender === "Female"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio text-pink-500"
-                      name="gender"
-                    />
-                    <span>Female</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* date of birth  */}
-
-              {/* Date of Birth Field */}
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="dob" className="font-semibold text-gray-700">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dateofbirth"
-                  value={dob}
-                  onChange={(e) => setDob(e.target.value)}
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-              </div>
+            <div className="mt-4">
+              <label
+                htmlFor="imageUpload"
+                className="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg shadow transition duration-200"
+              >
+                <FaUpload />
+              </label>
               <input
-                type="submit"
-                className="w-full bg-[#285599] border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-white hover:bg-[#3a6fbf] transition-all duration-300 font-medium cursor-pointer"
+                id="imageUpload"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    uploadImage(file);
+                  }
+                }}
+                className="hidden"
               />
             </div>
-          </form>
-        </div>
+
+            {/* ✅ Hidden field to include uploaded image in form */}
+            <input
+              type="hidden"
+              name="image"
+              value={uploadedImageUrl || data?.image}
+            />
+          </div>
+
+          {/* Info Section */}
+          <div className="flex-1 w-full grid grid-cols-2 gap-6 text-left">
+            {/* Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={data.name}
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium"
+              />
+            </div>
+
+            {/* Email */}
+            <div className="">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={data.email}
+                readOnly
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium cursor-not-allowed"
+              />
+            </div>
+
+            {/* father name  */}
+            <div>
+              <label className=" block text-sm font-medium text-gray-600 mb-1">
+                Father's Name
+              </label>
+              <input
+                type="text"
+                name="fathername"
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
+              />
+            </div>
+
+            {/* phone  */}
+            <div>
+              <label className=" block text-sm font-medium text-gray-600 mb-1">
+                Phone
+              </label>
+              <input
+                type="text"
+                name="phone"
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
+              />
+            </div>
+
+            {/* mother name  */}
+            <div>
+              <label className=" block text-sm font-medium text-gray-600 mb-1">
+                Mother's Name
+              </label>
+              <input
+                type="text"
+                name="mothername"
+                className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
+              />
+            </div>
+
+            {/* gender */}
+            <div className="flex flex-col space-y-2">
+              <label className="font-semibold text-gray-700">Gender</label>
+
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center space-x-1">
+                  <input
+                    type="radio"
+                    value="Male"
+                    checked={gender === "Male"}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="form-radio text-blue-600"
+                    name="gender"
+                  />
+                  <span>Male</span>
+                </label>
+
+                <label className="flex items-center space-x-1">
+                  <input
+                    type="radio"
+                    value="Female"
+                    checked={gender === "Female"}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="form-radio text-pink-500"
+                    name="gender"
+                  />
+                  <span>Female</span>
+                </label>
+              </div>
+            </div>
+
+            {/* date of birth  */}
+
+            {/* Date of Birth Field */}
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="dob" className="font-semibold text-gray-700">
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                id="dob"
+                name="dateofbirth"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <input
+              type="submit"
+              className="w-full bg-[#285599] border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-white hover:bg-[#3a6fbf] transition-all duration-300 font-medium cursor-pointer"
+            />
+          </div>
+        </form>
       </div>
     </div>
   );

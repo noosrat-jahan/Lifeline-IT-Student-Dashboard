@@ -12,7 +12,7 @@ const useNotice = () => {
           `${import.meta.env.VITE_API_URL}/api/dashboard/notices`
         );
         setNotices(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       } catch (err) {
         setError(err);
       } finally {
