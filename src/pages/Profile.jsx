@@ -1,67 +1,66 @@
-import { dashboardData } from "@/hooks/dashboardData";
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { FaUpload } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { dashboardData } from "@/hooks/dashboardData"
+import axios from "axios"
+import React, { useEffect, useRef, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { FaUpload } from "react-icons/fa"
+import { useLocation, useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error, refetch } = dashboardData()
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
 
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("")
+  const [dob, setDob] = useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   async function uploadImage(file) {
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38";
-    const formData = new FormData();
-    formData.append("image", file);
+    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
+    const formData = new FormData()
+    formData.append("image", file)
 
     const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: "POST",
       body: formData,
-    });
+    })
 
-    const data = await res.json();
-    console.log("Image URL:", data.data.url);
+    const data = await res.json()
+    console.log("Image URL:", data.data.url)
   }
 
   const handleChangeProfile = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
 
-    console.log(data);
+    console.log(data)
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         if (res.data.success) {
           Swal.fire({
             title: `Profile has been updated!`,
             icon: "success",
             draggable: true,
-          });
+          })
 
-          setInterval(() => {
-            navigate("/");
-          }, 3000);
-        }
-        else{
-           Swal.fire({
+          setTimeout(() => {
+            navigate("/")
+          }, 3000)
+        } else {
+          Swal.fire({
             title: `Something went wrong!`,
             icon: "error",
             draggable: true,
-          });
+          })
         }
-      });
-  };
+      })
+  }
 
   return (
     <div>
@@ -106,9 +105,9 @@ const Profile = () => {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    const file = e.target.files[0];
+                    const file = e.target.files[0]
                     if (file) {
-                      uploadImage(file);
+                      uploadImage(file)
                     }
                   }}
                   className="hidden"
@@ -237,7 +236,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
