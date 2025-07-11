@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import course from "../assets/course.jpg";
-
 import {
   Accordion,
   AccordionContent,
