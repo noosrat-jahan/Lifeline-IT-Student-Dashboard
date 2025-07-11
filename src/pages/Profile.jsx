@@ -249,7 +249,7 @@ const Profile = () => {
               name="image"
               value={uploadedImageUrl || data?.image}
             />
-          </div>
+          
 
           {/* Info Section */}
           <div className="flex-1 w-full grid grid-cols-2 gap-6 text-left">
@@ -369,6 +369,7 @@ const Profile = () => {
             />
           </div>
         </form>
+        
       </div>
     </div>
   )
