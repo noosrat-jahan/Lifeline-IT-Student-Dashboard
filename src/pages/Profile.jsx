@@ -50,7 +50,7 @@ const Profile = () => {
           })
 
           setTimeout(() => {
-            navigate("/")
+            navigate("/profile")
           }, 3000)
         } else {
           Swal.fire({
