@@ -1,66 +1,71 @@
-import { dashboardData } from "@/hooks/dashboardData"
-import axios from "axios"
-import React, { useEffect, useRef, useState } from "react"
-import { Helmet } from "react-helmet-async"
-import { FaUpload } from "react-icons/fa"
-import { useLocation, useNavigate } from "react-router-dom"
-import Swal from "sweetalert2"
+import { dashboardData } from "@/hooks/dashboardData";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { FaUpload } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = dashboardData()
+  const { data, isLoading, error, refetch } = dashboardData();
 
-  console.log(data, isLoading, error)
+  console.log(data, isLoading, error);
 
-  const [gender, setGender] = useState("")
-  const [dob, setDob] = useState("")
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // ✅ new
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   async function uploadImage(file) {
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
-    const formData = new FormData()
-    formData.append("image", file)
+    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38";
+    const formData = new FormData();
+    formData.append("image", file);
 
     const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: "POST",
       body: formData,
-    })
+    });
 
-    const data = await res.json()
-    console.log("Image URL:", data.data.url)
+    const data = await res.json();
+    if (data?.data?.url) {
+      setUploadedImageUrl(data.data.url); // ✅ set URL
+    }
+    console.log("Image URL:", data.data.url);
   }
 
   const handleChangeProfile = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-
-    console.log(data)
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    data.gender = gender;
+    data.dateofbirth = dob;
+    console.log(data);
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         if (res.data.success) {
           Swal.fire({
             title: `Profile has been updated!`,
             icon: "success",
             draggable: true,
-          })
+          });
 
           setTimeout(() => {
-            navigate("/")
-          }, 3000)
+            navigate("/");
+          }, 3000);
         } else {
           Swal.fire({
             title: `Something went wrong!`,
             icon: "error",
             draggable: true,
-          })
+          });
         }
-      })
-  }
+      });
+  };
 
   return (
     <div>
@@ -83,152 +88,13 @@ const Profile = () => {
             <h3 className="mt-3 font-bold">{data.name}</h3>
             <h5 className="text-xs text-gray-700">{data.sid}</h5>
 
-              {/* <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                  uploadImage(file);
-                }
-              }}
-              className="mt-4 text-sm"
-            /> */}
-
-              <div className="mt-4">
-                <label
-                  htmlFor="imageUpload"
-                  className="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg shadow transition duration-200"
-                >
-                  <FaUpload />
-                </label>
-                <input
-                  id="imageUpload"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0]
-                    if (file) {
-                      uploadImage(file)
-                    }
-                  }}
-                  className="hidden"
-                />
-              </div>
-            </div>
-
-            {/* Info Section */}
-            <div className="flex-1 w-full grid grid-cols-2 gap-6 text-left">
-              {/* Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  defaultValue={data.name}
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium"
-                />
-              </div>
-
-              {/* Email */}
-              <div className="">
-                <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={data.email}
-                  readOnly
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium cursor-not-allowed"
-                />
-              </div>
-
-              {/* father name  */}
-              <div>
-                <label className=" block text-sm font-medium text-gray-600 mb-1">
-                  Father's Name
-                </label>
-                <input
-                  type="text"
-                  name="fathername"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-                />
-              </div>
-
-              {/* phone  */}
-              <div>
-                <label className=" block text-sm font-medium text-gray-600 mb-1">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-                />
-              </div>
-
-              {/* mother name  */}
-              <div>
-                <label className=" block text-sm font-medium text-gray-600 mb-1">
-                  Mother's Name
-                </label>
-                <input
-                  type="text"
-                  name="mothername"
-                  className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
-                />
-              </div>
-
-              {/* gender */}
-              <div className="flex flex-col space-y-2">
-                <label className="font-semibold text-gray-700">Gender</label>
-
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center space-x-1">
-                    <input
-                      type="radio"
-                      value="Male"
-                      checked={gender === "Male"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio text-blue-600"
-                      name="gender"
-                    />
-                    <span>Male</span>
-                  </label>
-
-                  <label className="flex items-center space-x-1">
-                    <input
-                      type="radio"
-                      value="Female"
-                      checked={gender === "Female"}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="form-radio text-pink-500"
-                      name="gender"
-                    />
-                    <span>Female</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* date of birth  */}
-
-              {/* Date of Birth Field */}
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="dob" className="font-semibold text-gray-700">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dateofbirth"
-                  value={dob}
-                  onChange={(e) => setDob(e.target.value)}
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-              </div>
+            <div className="mt-4">
+              <label
+                htmlFor="imageUpload"
+                className="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg shadow transition duration-200"
+              >
+                <FaUpload />
+              </label>
               <input
                 id="imageUpload"
                 type="file"
@@ -242,14 +108,12 @@ const Profile = () => {
                 className="hidden"
               />
             </div>
-
-            {/* ✅ Hidden field to include uploaded image in form */}
             <input
               type="hidden"
               name="image"
               value={uploadedImageUrl || data?.image}
             />
-          
+          </div>
 
           {/* Info Section */}
           <div className="flex-1 w-full grid grid-cols-2 gap-6 text-left">
@@ -369,10 +233,9 @@ const Profile = () => {
             />
           </div>
         </form>
-        
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

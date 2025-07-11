@@ -119,7 +119,7 @@ const SideNav = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="" src={data?.image} />
                 </IconButton>
               </Tooltip>
               <Menu
