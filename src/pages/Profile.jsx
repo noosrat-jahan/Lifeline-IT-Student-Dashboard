@@ -1,71 +1,71 @@
-import { dashboardData } from "@/hooks/dashboardData";
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { FaUpload } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { dashboardData } from "@/hooks/dashboardData"
+import axios from "axios"
+import React, { useEffect, useRef, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { FaUpload } from "react-icons/fa"
+import { useLocation, useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error, refetch } = dashboardData()
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
 
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // ✅ new
+  const [gender, setGender] = useState("")
+  const [dob, setDob] = useState("")
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("") // ✅ new
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   async function uploadImage(file) {
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38";
-    const formData = new FormData();
-    formData.append("image", file);
+    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
+    const formData = new FormData()
+    formData.append("image", file)
 
     const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: "POST",
       body: formData,
-    });
+    })
 
-    const data = await res.json();
+    const data = await res.json()
     if (data?.data?.url) {
-      setUploadedImageUrl(data.data.url); // ✅ set URL
+      setUploadedImageUrl(data.data.url) // ✅ set URL
     }
-    console.log("Image URL:", data.data.url);
+    console.log("Image URL:", data.data.url)
   }
 
   const handleChangeProfile = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    data.gender = gender;
-    data.dateOfBirth = dob;
-    console.log(data);
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+    data.gender = gender
+    data.dateOfBirth = dob
+    console.log(data)
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         if (res.data.success) {
           Swal.fire({
             title: `Profile has been updated!`,
             icon: "success",
             draggable: true,
-          });
+          })
 
           setTimeout(() => {
-            navigate("/");
-          }, 3000);
+            navigate("/")
+          }, 3000)
         } else {
           Swal.fire({
             title: `Something went wrong!`,
             icon: "error",
             draggable: true,
-          });
+          })
         }
-      });
-  };
+      })
+  }
 
   return (
     <div>
@@ -100,9 +100,9 @@ const Profile = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
-                  const file = e.target.files[0];
+                  const file = e.target.files[0]
                   if (file) {
-                    uploadImage(file);
+                    uploadImage(file)
                   }
                 }}
                 className="hidden"
@@ -152,6 +152,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="father"
+                defaultValue={data.father}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -164,6 +165,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="phone"
+                defaultValue={data.phone}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -176,6 +178,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="mother"
+                defaultValue={data.mother}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -222,7 +225,7 @@ const Profile = () => {
                 type="date"
                 id="dob"
                 name="dateOfBirth"
-                value={dob}
+                value={data.dateOfBirth}
                 onChange={(e) => setDob(e.target.value)}
                 className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -235,7 +238,7 @@ const Profile = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
