@@ -6,7 +6,7 @@ import { dashboardData } from "@/hooks/dashboardData";
 const MainLayout = () => {
 
   return (
-    <div className="bg-[#f9f9ff] ">
+    <div className="bg-[#f9f9ff] font-roboto ">
       <SideNav />
 
       {/* <div className="px-4">

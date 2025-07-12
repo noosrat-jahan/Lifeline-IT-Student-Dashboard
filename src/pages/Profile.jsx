@@ -39,7 +39,7 @@ const Profile = () => {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     data.gender = gender;
-    data.dateofbirth = dob;
+    data.dateOfBirth = dob;
     console.log(data);
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
@@ -151,7 +151,7 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                name="fathername"
+                name="father"
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -175,7 +175,7 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                name="mothername"
+                name="mother"
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -221,7 +221,7 @@ const Profile = () => {
               <input
                 type="date"
                 id="dob"
-                name="dateofbirth"
+                name="dateOfBirth"
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"

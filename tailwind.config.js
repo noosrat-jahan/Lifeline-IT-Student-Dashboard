@@ -5,8 +5,10 @@ export default {
   theme: {
   	extend: {
   		fontFamily: {
-  			baloo: ['"Baloo Da 2"', 'cursive']
-  		},
+        baloo: ['"Baloo Da 2"', 'cursive'],
+        roboto: ['Roboto', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
   		colors: {
   			brand: '#8c2dff',
   			accent: {

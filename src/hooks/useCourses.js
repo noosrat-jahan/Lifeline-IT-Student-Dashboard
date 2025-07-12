@@ -10,7 +10,7 @@ const useCourses = () => {
   const [approvedCourse, setApprovedCourse] = useState([]);
   const [courses, setCourses] = useState([]);
 
-  console.log(data.courseStatus.approvedCourses);
+  console.log(data?.courseStatus.approvedCourses);
 
   
   useEffect(() => {
