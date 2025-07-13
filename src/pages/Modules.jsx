@@ -38,8 +38,10 @@ function getYouTubeVideoId(url) {
 
 const Modules = () => {
   const [vidUrl, setVidUrl] = useState("");
+  const [resources, setResources] = useState([]);
   const { route } = useParams();
   const { course, loading, error } = useCourseDetails(route);
+  const [activeModuleIndex, setActiveModuleIndex] = useState(null);
 
   const modules = course?.modules;
 
@@ -47,10 +49,13 @@ const Modules = () => {
     if (course?.modules?.length) {
       setVidUrl(course.modules[0].videoLink);
     }
+
+    if (course?.modules?.length) {
+      setResources(course.modules[0].resources);
+    }
   }, [course]);
 
   const videoId = getYouTubeVideoId(vidUrl);
-  console.log(videoId);
 
   if (loading) return <p>Loading modules...</p>;
   if (error) return <p>Error loading modules: {error.message || error}</p>;
@@ -62,7 +67,9 @@ const Modules = () => {
         <title>Course Modules — Lifeline IT</title>
       </Helmet>
 
-      <h1 className="text-3xl underline  text-[#0B254C] font-bold text-left">Course Modules</h1>
+      <h1 className="text-3xl underline  text-[#0B254C] font-bold text-left">
+        Course Modules
+      </h1>
       {/* Video Embed */}
       {videoId ? (
         <div className="my-8 max-w-3xl mx-auto aspect-video rounded-lg overflow-hidden shadow-lg">
@@ -78,7 +85,36 @@ const Modules = () => {
       ) : (
         <p className="text-red-500 mt-5">Invalid or missing video link.</p>
       )}
-      <div className="text-left">
+
+      {/* Resources */}
+      <h1 className=" text-left my-3 text-2xl text-[#0B254C] font-bold">
+        Resources
+      </h1>
+
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full shadow-lg p-4 rounded-md mx-auto border border-[#F7931E] text-left"
+      >
+        {resources.map((resource) => (
+          <AccordionItem key={resource} value={resource.title}>
+            <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium py-4">
+              {resource.title}
+            </AccordionTrigger>
+            <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
+              <Link
+                to={resource.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {resource.link}
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+      <div className="text-left mt-10">
         {modules.map((module, index) => {
           // const videoLink = module.videoLink[0].link;
           // const videoId = getYouTubeVideoId(videoLink);
@@ -95,48 +131,31 @@ const Modules = () => {
           const Resource = module.resources?.[0];
 
           return (
-            <div key={module.id || module.title || index} className="mb-10">
-              
+            <div key={module.id || module.title || index} className="mt-6">
               {/* Module Title */}
               <h1
                 onClick={() => {
                   setVidUrl(module.videoLink);
+                  setResources(module.resources);
+                  setActiveModuleIndex(index);
                 }}
-                className="bg-gray-100 cursor-pointer p-3 shadow-md rounded-md text-xl text-[#0B254C] font-bold"
+                className={`border border-[#F7931E] cursor-pointer p-3 shadow rounded-md text-xl  font-bold ${
+                  activeModuleIndex === index
+                    ? "bg-[#b96c16] text-white"
+                    : "bg-gray-50 text-black"
+                }`}
               >
-                {index + 1}. {module.title}
-              </h1>
-
-              {/* Resources */}
-              <h1 className=" text-left my-5 text-2xl text-[#0B254C] font-bold">
-                Resources
-              </h1>
-
-              {Resource ? (
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="w-full shadow-lg p-4 mx-auto"
+                <span
+                  className={`bg-[#F7931E] text-white rounded-full px-3 py-1 ${
+                    activeModuleIndex === index
+                      ? "bg-white text-[#b96c16]"
+                      : "bg-[#b96c16] text-white"
+                  }`}
                 >
-                  <AccordionItem value={Resource.title}>
-                    <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium py-4">
-                      {Resource.title}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-                      <Link
-                        to={Resource.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 underline"
-                      >
-                        {Resource.link}
-                      </Link>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              ) : (
-                <p>No resources available.</p>
-              )}
+                  {index + 1}
+                </span>{" "}
+                {module.title}
+              </h1>
             </div>
           );
         })}

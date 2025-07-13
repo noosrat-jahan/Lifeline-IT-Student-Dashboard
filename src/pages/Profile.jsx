@@ -12,7 +12,7 @@ const Profile = () => {
   console.log(data, isLoading, error);
 
   const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState("2000-01-01");
   const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // ✅ new
 
   const navigate = useNavigate();
@@ -152,6 +152,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="father"
+                defaultValue={data.father}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -164,6 +165,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="phone"
+                defaultValue={data.phone}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -176,6 +178,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="mother"
+                defaultValue={data.mother}
                 className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-800 font-medium "
               />
             </div>
@@ -191,7 +194,7 @@ const Profile = () => {
                     value="Male"
                     checked={gender === "Male"}
                     onChange={(e) => setGender(e.target.value)}
-                    className="form-radio text-blue-600"
+                    className="form-radio text-blue-600 w-5 h-5 cursor-pointer transition duration-300 ease-in-out"
                     name="gender"
                   />
                   <span>Male</span>
@@ -203,7 +206,7 @@ const Profile = () => {
                     value="Female"
                     checked={gender === "Female"}
                     onChange={(e) => setGender(e.target.value)}
-                    className="form-radio text-pink-500"
+                    className="form-radio text-pink-500 w-5 h-5 cursor-pointer transition duration-300 ease-in-out"
                     name="gender"
                   />
                   <span>Female</span>
@@ -222,9 +225,9 @@ const Profile = () => {
                 type="date"
                 id="dob"
                 name="dateOfBirth"
-                value={dob}
+                defaultValue={data.dateOfBirth}
                 onChange={(e) => setDob(e.target.value)}
-                className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full max-w-xs rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 shadow-sm transition duration-200 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none cursor-pointer"
               />
             </div>
             <input

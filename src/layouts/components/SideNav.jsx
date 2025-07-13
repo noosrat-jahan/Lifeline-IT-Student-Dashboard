@@ -118,7 +118,7 @@ const SideNav = () => {
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className="border-2 border-blue-700">
                   <Avatar alt="" src={data?.image} />
                 </IconButton>
               </Tooltip>
@@ -197,12 +197,12 @@ const SideNav = () => {
             <div className="text-xl font-semibold text-white mb-2">
               {data?.name}
             </div>
-            <div className="text-sm text-gray-100">SRD - 129103</div>
+            <div className="text-sm text-gray-100">{data?.sid}</div>
           </div>
 
-          <div className="absolute right-3 bottom-0 md:bottom-2 lg:bottom-4 text-xs text-gray-600">
+          {/* <div className="absolute right-3 bottom-0 md:bottom-2 lg:bottom-4 text-xs text-gray-600">
             IP Address : 89.116.158.124
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -269,7 +269,7 @@ const SideNav = () => {
                   to="/certificate"
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
-                  <GrCertificate /> Download Certificate
+                  <GrCertificate /> My Certificate
                 </NavLink>
               </li>
 
