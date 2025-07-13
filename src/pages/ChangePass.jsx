@@ -1,9 +1,11 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ChangePass = () => {
- 
+  // const [errorMessage, setErrorMessage] = useState("");
   const handleChangePassword = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -14,7 +16,28 @@ const ChangePass = () => {
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
         withCredentials: true,
       })
-      .then((res) => console.log(res.data));
+      .then((res) => {
+        console.log(res.data);
+        // setErrorMessage(res.data.message);
+        const data = res.data;
+        if (data.success) {
+          toast.success(data.message, {
+            position: "top-center",
+            autoClose: 5000,
+            closeOnClick: true,
+            draggable: true,
+            theme: "dark",
+          });
+        } else {
+          toast.error(data.message, {
+            position: "top-center",
+            autoClose: 5000,
+            closeOnClick: true,
+            draggable: true,
+            theme: "dark",
+          });
+        }
+      });
   };
 
   return (
@@ -37,7 +60,7 @@ const ChangePass = () => {
 
           {/* Info Section */}
 
-          <div  className="flex-1 w-full grid grid-cols-1 gap-6 text-left">
+          <div className="flex-1 w-full grid grid-cols-1 gap-6 text-left">
             {/* pass 1 */}
             <form onSubmit={handleChangePassword} className="space-y-3">
               <div>
@@ -47,6 +70,7 @@ const ChangePass = () => {
                 <input
                   type="password"
                   name="currentpass"
+                  required
                   className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium "
                 />
               </div>
@@ -58,6 +82,7 @@ const ChangePass = () => {
                 <input
                   type="password"
                   name="newpass"
+                  required
                   className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium "
                 />
               </div>
@@ -68,7 +93,8 @@ const ChangePass = () => {
                 </label>
                 <input
                   type="password"
-                  name="newpass"
+                  name="confirmpass"
+                  required
                   className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 shadow-sm text-gray-500 font-medium "
                 />
               </div>
@@ -81,6 +107,7 @@ const ChangePass = () => {
           </div>
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };
