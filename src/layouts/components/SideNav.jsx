@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../../assets/Website Logo.png";
 import MyCourses from "../../pages/MyCourses";
@@ -33,13 +33,18 @@ import Swal from "sweetalert2";
 
 import { CiLock } from "react-icons/ci";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
-import { IoIosPaper, IoMdLock } from "react-icons/io";
+import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io";
 import { dashboardData } from "@/hooks/dashboardData";
 import useNotice from "@/hooks/useNotice";
+import { AiOutlineMenuFold } from "react-icons/ai";
 
 const SideNav = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => setIsOpen(!isOpen);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -96,6 +101,129 @@ const SideNav = () => {
             />
           </Link>
 
+          <div
+            className="text-[#0B254C] text-lg lg:hidden"
+            onClick={toggleNavbar}
+          >
+            <AiOutlineMenuFold />
+          </div>
+
+          {/* Mobile Drawer */}
+          <div
+            className={`fixed z-10 top-0 right-0 h-screen overflow-auto lg:hidden w-11/12 bg-blue-50 border-l border-neutral-300 shadow-lg transition-transform duration-500 ease-in-out transform ${
+              isOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            {/* Drawer Header */}
+            <div className="w-full flex items-center justify-between px-4">
+              <Link
+                to="/"
+                className="text-lg font-semibold text-sky-700 flex items-center gap-x-2"
+              >
+                <img src={logo} alt="" className="w-1/2 md:w-1/3" />
+              </Link>
+              <div className="lg:hidden flex justify-end py-6">
+                <button
+                  onClick={toggleNavbar}
+                  className="text-gold focus:outline-none"
+                >
+                  <IoMdClose size={28} />
+                </button>
+              </div>
+            </div>
+
+            <div className="border-b border-neutral-300"></div>
+
+            <div className="flex-1 flex flex-col items-center justify-between gap-6 p-6">
+              <ul
+                onClick={() => setIsOpen(false)}
+                className="flex flex-col items-center justify-center gap-6 text-base text-neutral-700 font-normal font-roboto"
+              >
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <FiHome /> My Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/orders"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <MdOutlineShoppingCart /> My Orders
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/courses"
+                    className="flex items-center gap-2 p-2 rounded-md"
+                  >
+                    <RiGraduationCapFill /> My Courses
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/notice"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <MdOutlineInsertComment /> Notice Board
+                    <span className="ml-auto text-xs bg-red-300 text-red-900 font-bold px-2 py-0.5 rounded-full">
+                      {notices?.length}
+                    </span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/registration-card"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <IoNewspaperOutline /> Registration Card
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/certificate"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <GrCertificate /> My Certificate
+                  </NavLink>
+                </li>
+
+                <h3 className="text-left ml-3 text-gray-800">User</h3>
+                <li>
+                  <NavLink
+                    to="/profile"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <FaUserGraduate /> My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/password-reset"
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <IoMdLock /> Change Password
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/"
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
+                  >
+                    <FaArrowRightFromBracket /> Logout
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <nav className="hidden md:flex items-center justify-evenly space-x-4 text-sm">
             {/* <Link
               to="/"
@@ -118,7 +246,11 @@ const SideNav = () => {
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className="border-2 border-blue-700">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                  className="border-2 border-blue-700"
+                >
                   <Avatar alt="" src={data?.image} />
                 </IconButton>
               </Tooltip>
@@ -145,7 +277,7 @@ const SideNav = () => {
                       backgroundColor: "transparent", // removes hover background
                     },
                     padding: 1.5,
-                     // optional: remove default padding if needed
+                    // optional: remove default padding if needed
                   }}
                 >
                   <Typography sx={{ textAlign: "center" }}>
@@ -180,17 +312,21 @@ const SideNav = () => {
 
       {/* <!-- Hero Banner --> */}
       <section className="bg-white py-10">
-        <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[370px] lg:min-h-[240px] ">
+        <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[350px] lg:min-h-[240px] ">
           <div className="flex-1 bg-gradient-to-l from-[#0B254C] via-[#266ea1] to-[#041630] text-white  flex flex-col justify-center">
             <h1 className="text-3xl font-bold">Where Learners Meet Success</h1>
-            <p className="text-[#ffc25a] font-bold text-lg mt-3">
+            <p className="text-[#ffc25a] font-bold text-sm lg:text-lg mt-3">
               40K+ Students $3.5M+ Earned*
             </p>
           </div>
 
           <div className="absolute left-6 bottom-[4px] lg:left-6 lg:bottom-[12px] w-24 h-24 rounded-full border-4 border-white bg-blue-500 flex items-center justify-center cursor-pointer overflow-hidden shadow shadow-blue-100">
             {/* <i className="fas fa-user text-white text-4xl"></i> */}
-            <img src={data?.image} alt="" className="w-full h-full object-cover" />
+            <img
+              src={data?.image}
+              alt=""
+              className="w-full h-full object-cover"
+            />
           </div>
 
           <div className="absolute left-40 bottom-4 lg:bottom-8 text-gray-800">
@@ -209,7 +345,7 @@ const SideNav = () => {
       {/* <!-- Main Layout --> */}
       <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 mt-10 px-2 lg:px-4">
         {/* <!-- Sidebar --> */}
-        <aside className="lg:w-1/4 w-full">
+        <aside className="lg:w-1/4 w-full hidden lg:block">
           <div className="bg-white shadow-card rounded-xl p-6">
             <div className="uppercase text-sm text-gray-500 mb-4">
               Welcome, <strong>{data?.name}</strong>
@@ -258,7 +394,6 @@ const SideNav = () => {
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <IoNewspaperOutline /> Registration Card
-                  
                 </NavLink>
               </li>
 
@@ -301,7 +436,7 @@ const SideNav = () => {
           </div>
         </aside>
 
-        <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl p-8">
+        <div className="lg:w-3/4 bg-white shadow-card h-max rounded-xl lg:p-8">
           {/* page wise content */}
 
           <Outlet></Outlet>

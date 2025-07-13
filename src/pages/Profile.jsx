@@ -122,7 +122,7 @@ const Profile = () => {
           </div>
 
           {/* Info Section */}
-          <div className="flex-1 w-full grid grid-cols-2 gap-6 text-left">
+          <div className="flex-1 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 text-left">
             {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">
