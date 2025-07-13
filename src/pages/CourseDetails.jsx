@@ -12,7 +12,6 @@ import axios from "axios";
 import useCourseDetails from "@/hooks/useCourseDetails";
 import { Helmet } from "react-helmet-async";
 
-
 const CourseDetails = () => {
   const questions = [
     {
@@ -53,10 +52,10 @@ const CourseDetails = () => {
 
         <div>
           {/* <h1 className="font-bold text-lg">Course & Batch</h1> */}
-          <p className="text-xl font-bold text-[#0B254C] mb-4 ">
-            <span>Course:</span> {course.title}
+          <p className="text-2xl font-bold text-[#0B254C] mb-4 ">
+             {course.title}
           </p>
-          <p className="text-xl font-bold text-[#0B254C]">{course.subtitle}</p>
+          <p className="text-lg font-bold text-[#0B254C]">{course.subtitle}</p>
         </div>
 
         <h1 className="font-bold text-lg">Instructor</h1>
@@ -100,7 +99,7 @@ const CourseDetails = () => {
                 {zoom.title}
               </AccordionTrigger>
               <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-                <Link to="">{zoom.link}</Link>
+                <Link to={zoom.link} target="blank">{zoom.link}</Link>
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -114,7 +113,7 @@ const CourseDetails = () => {
                 {liveClass.title}
               </AccordionTrigger>
               <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-                {liveClass.link}
+                <Link to={liveClass.link} target="blank">{liveClass.link}</Link>
               </AccordionContent>
             </AccordionItem>
           ))}
