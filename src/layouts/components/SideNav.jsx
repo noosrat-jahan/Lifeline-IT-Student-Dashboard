@@ -258,9 +258,7 @@ const SideNav = () => {
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <IoNewspaperOutline /> Registration Card
-                  <span className="ml-auto text-xs bg-yellow-200 text-yellow-800 font-bold px-2 py-0.5 rounded-full">
-                    0
-                  </span>
+                  
                 </NavLink>
               </li>
 

@@ -45,7 +45,7 @@ const CourseDetails = () => {
         <title>Course Details — Lifeline IT</title>
       </Helmet>
 
-      <div className="text-left space-y-10">
+      <div className="text-left space-y-5">
         <h2 className="mb-4 text-2xl text-left font-semibold leading-tight">
           Course Details
         </h2>
@@ -86,16 +86,16 @@ const CourseDetails = () => {
           ))}
         </div>
 
-        <h1 className="font-bold text-lg">Facebook live Support</h1>
+        <h1 className="font-bold text-lg pt-5">Facebook live Support</h1>
 
         <Accordion
           type="single"
           collapsible
-          className="w-full shadow-lg p-4 mx-auto"
+          className="w-full  p-4 mx-auto"
         >
           {liveSupport.map((zoom) => (
             <AccordionItem value={zoom} key={zoom}>
-              <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium py-4">
+              <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium ">
                 {zoom.title}
               </AccordionTrigger>
               <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
@@ -105,7 +105,7 @@ const CourseDetails = () => {
           ))}
         </Accordion>
 
-        <h1 className="font-bold text-lg">Zoom live Class Link</h1>
+        <h1 className="font-bold text-lg pt-5">Zoom live Class Link</h1>
         <Accordion type="single" collapsible className="w-full p-4 mx-auto">
           {liveClasses.map((liveClass) => (
             <AccordionItem value={liveClass} key={liveClass}>

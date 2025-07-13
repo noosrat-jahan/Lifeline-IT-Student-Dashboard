@@ -139,14 +139,14 @@ const Modules = () => {
                   setResources(module.resources);
                   setActiveModuleIndex(index);
                 }}
-                className={`border border-[#F7931E] cursor-pointer p-3 shadow rounded-md text-xl  font-bold ${
+                className={`border border-[#b96c16] cursor-pointer p-3 shadow rounded-md text-xl  font-bold ${
                   activeModuleIndex === index
                     ? "bg-[#b96c16] text-white"
                     : "bg-gray-50 text-black"
                 }`}
               >
                 <span
-                  className={`bg-[#F7931E] text-white rounded-full px-3 py-1 ${
+                  className={`bg-[#F7931E] text-white font-bold rounded-full px-3 py-1 ${
                     activeModuleIndex === index
                       ? "bg-white text-[#b96c16]"
                       : "bg-[#b96c16] text-white"
