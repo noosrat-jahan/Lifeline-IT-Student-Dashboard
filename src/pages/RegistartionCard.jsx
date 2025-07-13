@@ -9,18 +9,18 @@ const RegistartionCard = () => {
   const [btnloading, setBtnloading] = useState(null);
   const { data, isLoading, error, refetch } = dashboardData();
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
 
-  const { courses } = useCourses();
+  const { courses } = useCourses()
 
-  console.log(courses);
+  console.log(courses)
 
   const handleDownload = async (id, courseTitle) => {
     setBtnloading(id);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/dashboard/registration`,
-        { email: data.email, courseId: id },
+        { studentId: data.id, courseId: id },
         {
           headers: {
             "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const RegistartionCard = () => {
                 <td className="w-1/4 pr-4 border-b border-gray-300">
                   <button
                     onClick={() => {
-                      handleDownload(course._id, course.title);
+                      handleDownload(course._id, course.title)
                     }}
                     className={`w-full flex mx-auto  justify-center py-2 px-2 font-semibold rounded-md bg-gradient-to-l from-[#0B254C] via-[#266ea1] to-[#041630] text-white cursor-pointer`}
                   >
@@ -111,7 +111,7 @@ const RegistartionCard = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegistartionCard;
+export default RegistartionCard
