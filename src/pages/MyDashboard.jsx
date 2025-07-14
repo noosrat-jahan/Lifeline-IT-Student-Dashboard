@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import React, { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
 
-import { MdOutlineDone, MdOutlineShoppingCart } from "react-icons/md";
-import { FaBookOpen, FaBorderAll, FaDollarSign } from "react-icons/fa";
-import { RxStopwatch } from "react-icons/rx";
-import { TiTick } from "react-icons/ti";
-import { dashboardData } from "@/hooks/dashboardData";
-import { Helmet } from "react-helmet-async";
-
+import { MdOutlineDone, MdOutlineShoppingCart } from "react-icons/md"
+import { FaBookOpen, FaBorderAll, FaDollarSign } from "react-icons/fa"
+import { RxStopwatch } from "react-icons/rx"
+import { TiTick } from "react-icons/ti"
+import { dashboardData } from "@/hooks/dashboardData"
+import { Helmet } from "react-helmet-async"
 
 const MyDashboard = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error, refetch } = dashboardData()
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
   return (
     <>
-      
       <Helmet>
         <title>My Dashboard — Lifeline IT</title>
       </Helmet>
@@ -50,7 +48,7 @@ const MyDashboard = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MyDashboard;
+export default MyDashboard

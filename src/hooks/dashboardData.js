@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
 
 export const dashboardData = () => {
   return useQuery({
@@ -7,13 +7,12 @@ export const dashboardData = () => {
     queryFn: async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/dashboard`,
-        { withCredentials: true },
-        
-      );
-      return res.data;
+        { withCredentials: true }
+      )
+      return res.data
     },
     onError: (error) => {
-      console.error("Dashboard API Error:", error);
+      console.error("Dashboard API Error:", error)
     },
-  });
-};
+  })
+}
