@@ -47,7 +47,7 @@ const ChangePass = () => {
       </Helmet>
 
       <h1 className="text-2xl text-blue-900 mb-3 font-bold">Change Password</h1>
-      <div className="w-1/2 mx-auto mt-5 p-6 bg-white rounded-xl shadow-md border border-gray-200">
+      <div className="lg:w-1/2 mx-auto mt-5 p-6 bg-white rounded-xl shadow-md border border-gray-200">
         <div className="flex flex-col md:flex-row gap-14 ">
           {/* Profile Picture */}
           {/* <div className="flex-shrink-0">
