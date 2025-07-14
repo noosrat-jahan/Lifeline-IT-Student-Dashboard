@@ -1,27 +1,50 @@
+<<<<<<< HEAD
 import useCourseDetails from "@/hooks/useCourseDetails"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+=======
+import useCourseDetails from "@/hooks/useCourseDetails";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+<<<<<<< HEAD
 } from "@/components/ui/accordion"
 import { Helmet } from "react-helmet-async"
+=======
+} from "@/components/ui/accordion";
+import { Helmet } from "react-helmet-async";
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 
 // Extract YouTube video ID from URL
 function getYouTubeVideoId(url) {
   try {
+<<<<<<< HEAD
     const parsedUrl = new URL(url)
     if (parsedUrl.hostname.includes("youtube.com"))
       return parsedUrl.searchParams.get("v")
     if (parsedUrl.hostname === "youtu.be") return parsedUrl.pathname.slice(1)
+=======
+    const parsedUrl = new URL(url);
+    if (parsedUrl.hostname.includes("youtube.com"))
+      return parsedUrl.searchParams.get("v");
+    if (parsedUrl.hostname === "youtu.be") return parsedUrl.pathname.slice(1);
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
     if (
       parsedUrl.hostname === "www.youtube.com" &&
       parsedUrl.pathname.startsWith("/embed/")
     )
+<<<<<<< HEAD
       return parsedUrl.pathname.split("/embed/")[1]
     return null
+=======
+      return parsedUrl.pathname.split("/embed/")[1];
+    return null;
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
   } catch {
     return null
   }
@@ -31,6 +54,7 @@ const Modules = () => {
   const { route } = useParams()
   const { course, loading, error } = useCourseDetails(route)
 
+<<<<<<< HEAD
   const [vidUrl, setVidUrl] = useState("")
   const [resources, setResources] = useState([])
   const [activeModuleIndex, setActiveModuleIndex] = useState(null)
@@ -41,6 +65,10 @@ const Modules = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+=======
+  const containerRef = useRef(null); // For fullscreen container (outer div)
+  const playerContainerRef = useRef(null); // For YouTube player div (inner div)
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 
   const videoId = getYouTubeVideoId(vidUrl)
   const playerRef = useRef(null)
@@ -55,6 +83,7 @@ const Modules = () => {
       setResources(course.modules[0].resources || [])
       setActiveModuleIndex(0)
     }
+<<<<<<< HEAD
   }, [course])
 
   useEffect(() => {
@@ -64,6 +93,17 @@ const Modules = () => {
       tag.id = "youtube-api-script"
       tag.src = "https://www.youtube.com/iframe_api"
       document.body.appendChild(tag)
+=======
+  }, [course]);
+
+  useEffect(() => {
+    const existingScript = document.getElementById("youtube-api-script");
+    if (!existingScript) {
+      const tag = document.createElement("script");
+      tag.id = "youtube-api-script";
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
     }
 
     const onYouTubeReady = () => {
@@ -83,6 +123,7 @@ const Modules = () => {
           },
           events: {
             onReady: () => {
+<<<<<<< HEAD
               setPlayerReady(true)
               setDuration(playerRef.current.getDuration())
             },
@@ -95,10 +136,25 @@ const Modules = () => {
       onYouTubeReady()
     } else {
       window.onYouTubeIframeAPIReady = onYouTubeReady
+=======
+              setPlayerReady(true);
+              setDuration(playerRef.current.getDuration());
+            },
+          },
+        });
+      }
+    };
+
+    if (window.YT && window.YT.Player) {
+      onYouTubeReady();
+    } else {
+      window.onYouTubeIframeAPIReady = onYouTubeReady;
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
     }
 
     return () => {
       if (playerRef.current?.destroy) {
+<<<<<<< HEAD
         playerRef.current.destroy()
       }
       setPlayerReady(false)
@@ -117,6 +173,13 @@ const Modules = () => {
       setIsPlaying(true)
     }
   })
+=======
+        playerRef.current.destroy();
+      }
+      setPlayerReady(false);
+    };
+  }, [videoId]);
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 
   // ⌨️ Keyboard Shortcut UseEffect
   useEffect(() => {
@@ -223,15 +286,27 @@ const Modules = () => {
   // Update video when changed
   useEffect(() => {
     if (playerRef.current && videoId && playerReady) {
+<<<<<<< HEAD
       playerRef.current.loadVideoById(videoId)
+=======
+      // playerRef.current.loadVideoById(videoId);
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
     }
   }, [videoId, playerReady])
 
+<<<<<<< HEAD
   const handlePlay = () => {
     if (playerReady && playerRef.current) {
       playerRef.current.playVideo()
     }
   }
+=======
+  // const handlePlay = () => {
+  //   if (playerReady && playerRef.current) {
+  //     playerRef.current.playVideo();
+  //   }
+  // };
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 
   if (loading) return <p>Loading modules...</p>
   if (error) return <p>Error loading modules: {error.message || error}</p>
@@ -280,15 +355,26 @@ const Modules = () => {
           {isPlaying && (
             <div
               onClick={(e) => e.stopPropagation()} // prevent closing video on control click
+<<<<<<< HEAD
               className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 px-4 py-2 bg-black/60 text-white rounded"
             >
               <div className="flex gap-2 items-center">
                 <button
+=======
+              className={`absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 px-4 py-2  ${isPlaying && "hidden"} bg-black/60 text-white rounded`}
+            >
+              <div className="flex gap-2 items-center">
+                {/* <button
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
                   onClick={togglePlayPause}
                   className="px-2 py-1 bg-white/10 rounded"
                 >
                   ⏸ Pause
+<<<<<<< HEAD
                 </button>
+=======
+                </button> */}
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
                 <span className="text-sm">
                   {formatTime(currentTime)} / {formatTime(duration)}
                 </span>
@@ -300,17 +386,26 @@ const Modules = () => {
                 max={duration}
                 value={currentTime}
                 onChange={handleSeek}
+<<<<<<< HEAD
                 className="w-full h-1 accent-orange-400"
               />
 
               {/* Fullscreen Button */}
+=======
+                className={`w-full h-[1px] accent-orange-400`}
+              />
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
             </div>
           )}
 
           {/* Fullscreen Button */}
           <button
             onClick={toggleFullscreen}
+<<<<<<< HEAD
             className="absolute bottom-4 right-4 px-3 py-1 bg-amber-500 rounded hover:bg-white/20 transition text-black z-10"
+=======
+            className="absolute bottom-4 right-4 px-3 py-1 bg-amber-500 rounded  transition text-black z-10"
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
             title="Toggle Fullscreen"
           >
             ⛶
@@ -388,10 +483,17 @@ const Modules = () => {
         ))}
       </div>
     </>
+<<<<<<< HEAD
   )
 }
 
 export default Modules
+=======
+  );
+};
+
+export default Modules;
+>>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 
 // ei code ta main, working nicely
 
