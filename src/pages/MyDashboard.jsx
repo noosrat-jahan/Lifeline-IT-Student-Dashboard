@@ -1,16 +1,12 @@
-import React, { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
+import React from "react"
 
 import { MdOutlineDone, MdOutlineShoppingCart } from "react-icons/md"
-import { FaBookOpen, FaBorderAll, FaDollarSign } from "react-icons/fa"
-import { RxStopwatch } from "react-icons/rx"
-import { TiTick } from "react-icons/ti"
+import { FaBorderAll } from "react-icons/fa"
 import { dashboardData } from "@/hooks/dashboardData"
 import { Helmet } from "react-helmet-async"
 
 const MyDashboard = () => {
-  const { data, isLoading, error, refetch } = dashboardData()
+  const { data, isLoading, error } = dashboardData()
 
   console.log(data, isLoading, error)
   return (
