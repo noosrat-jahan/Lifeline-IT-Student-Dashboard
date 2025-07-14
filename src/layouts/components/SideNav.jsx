@@ -9,6 +9,7 @@ import {
 } from "react-icons/md";
 import { RiGraduationCapFill } from "react-icons/ri";
 import {
+  FaAngleDoubleUp,
   FaBars,
   FaRegClock,
   FaRegComment,
@@ -16,7 +17,7 @@ import {
 } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import { GrCertificate } from "react-icons/gr";
-import { IoNewspaperOutline } from "react-icons/io5";
+import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5";
 
 import student from "../../assets/student.jpg";
 
@@ -37,7 +38,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import { CiLock } from "react-icons/ci";
-import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { FaArrowRightFromBracket, FaBarsStaggered } from "react-icons/fa6";
 import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io";
 import { dashboardData } from "@/hooks/dashboardData";
 import useNotice from "@/hooks/useNotice";
@@ -106,37 +107,49 @@ const SideNav = () => {
             />
           </Link>
 
+           <div
+            className="text-[#0B254C] text-2xl lg:hidden flex justify-end"
+            onClick={toggleNavbar}
+          >
+           <FaAngleDoubleUp />
+
+
+
+          </div>
+
           {/* Mobile Drawer */}
           <div
-            className={`fixed z-10 top-0 right-0 h-screen overflow-auto lg:hidden w-11/12 bg-blue-50 border-l border-neutral-300 shadow-lg transition-transform duration-500 ease-in-out transform ${
-              isOpen ? "translate-x-0" : "translate-x-full"
+            className={`fixed z-10 bottom-0 right-0 h-[80vh] overflow-auto lg:hidden w-full bg-blue-50 border-l border-neutral-300 shadow-lg transition-transform duration-500 ease-in-out transform ${
+              isOpen ? "translate-y-0" : "translate-y-full"
             }`}
           >
             {/* Drawer Header */}
             <div className="w-full flex items-center justify-between px-4">
-              <Link
+              {/* <Link
                 to="/"
                 className="text-lg font-semibold text-sky-700 flex items-center gap-x-2"
               >
                 <img src={logo} alt="" className="w-1/2 md:w-1/3" />
-              </Link>
-              <div className="lg:hidden flex justify-end py-6">
+              </Link> */}
+              {/* <div></div> */}
+              {/* <div className="lg:hidden flex justify-end py-6">
                 <button
                   onClick={toggleNavbar}
                   className="text-gold focus:outline-none"
                 >
-                  <IoMdClose size={28} />
+                  <IoMdClose size={30} />
                 </button>
-              </div>
+              </div> */}
             </div>
 
-            <div className="border-b border-neutral-300"></div>
+            {/* <div className="border-b border-gray-700 pt-4"></div> */}
 
             <div className="flex-1 flex flex-col items-center justify-between gap-6 p-6">
               <ul
                 onClick={() => setIsOpen(false)}
-                className="flex flex-col items-center justify-center gap-6 text-base text-neutral-700 font-normal font-roboto"
+                className="flex flex-col items-start justify-center gap-6 text-base text-neutral-700 font-normal font-roboto"
               >
+                
                 <li>
                   <NavLink
                     to="/dashboard"
@@ -192,7 +205,7 @@ const SideNav = () => {
                   </NavLink>
                 </li>
 
-                <h3 className="text-left ml-3 text-gray-800">User</h3>
+                <h3 className="text-left -ml-4  text-gray-800">User</h3>
                 <li>
                   <NavLink
                     to="/profile"
@@ -343,12 +356,7 @@ const SideNav = () => {
       {/* <!-- Main Layout --> */}
       <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 lg:mt-10 px-2 lg:px-4">
         {
-          <div
-            className="text-[#0B254C] text-lg lg:hidden flex justify-end mr-4 mb-4"
-            onClick={toggleNavbar}
-          >
-            <FaBars />
-          </div>
+         
           /* <!-- Sidebar --> */
         }
         <aside className="lg:w-1/4 w-full hidden lg:block">

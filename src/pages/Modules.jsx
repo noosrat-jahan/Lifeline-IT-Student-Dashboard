@@ -1,4 +1,3 @@
-
 import useCourseDetails from "@/hooks/useCourseDetails";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -10,14 +9,17 @@ import {
 } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
 
-
 // Extract YouTube video ID from URL
 function getYouTubeVideoId(url) {
   try {
     const parsedUrl = new URL(url);
-    if (parsedUrl.hostname.includes("youtube.com")) return parsedUrl.searchParams.get("v");
+    if (parsedUrl.hostname.includes("youtube.com"))
+      return parsedUrl.searchParams.get("v");
     if (parsedUrl.hostname === "youtu.be") return parsedUrl.pathname.slice(1);
-    if (parsedUrl.hostname === "www.youtube.com" && parsedUrl.pathname.startsWith("/embed/"))
+    if (
+      parsedUrl.hostname === "www.youtube.com" &&
+      parsedUrl.pathname.startsWith("/embed/")
+    )
       return parsedUrl.pathname.split("/embed/")[1];
     return null;
   } catch {
@@ -32,9 +34,7 @@ const Modules = () => {
   const { course, loading, error } = useCourseDetails(route);
   const [activeModuleIndex, setActiveModuleIndex] = useState(null);
 
-
-
-  const containerRef = useRef(null);       // For fullscreen container (outer div)
+  const containerRef = useRef(null); // For fullscreen container (outer div)
   const playerContainerRef = useRef(null); // For YouTube player div (inner div)
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -56,33 +56,51 @@ const Modules = () => {
     }
   }, [course]);
 
-
   useEffect(() => {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
+    const existingScript = document.getElementById("youtube-api-script");
+    if (!existingScript) {
+      const tag = document.createElement("script");
+      tag.id = "youtube-api-script";
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    }
 
-    window.onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player(playerContainerRef.current, {
-        videoId,
-        playerVars: {
-          autoplay: 0,
-          rel: 0,
-          modestbranding: 1,
-          controls: 0,
-          showinfo: 0,
-          fs: 0,
-          disablekb: 1,
-          iv_load_policy: 3,
-          origin: window.location.origin,
-        },
-        events: {
-          onReady: () => {
-            setPlayerReady(true);
-            setDuration(playerRef.current.getDuration());
+    const onYouTubeReady = () => {
+      if (playerContainerRef.current) {
+        playerRef.current = new window.YT.Player(playerContainerRef.current, {
+          videoId,
+          playerVars: {
+            autoplay: 0,
+            rel: 0,
+            modestbranding: 1,
+            controls: 0,
+            showinfo: 0,
+            fs: 0,
+            disablekb: 1,
+            iv_load_policy: 3,
+            origin: window.location.origin,
           },
-        },
-      });
+          events: {
+            onReady: () => {
+              setPlayerReady(true);
+              setDuration(playerRef.current.getDuration());
+            },
+          },
+        });
+      }
+    };
+
+    if (window.YT && window.YT.Player) {
+      onYouTubeReady();
+    } else {
+      window.onYouTubeIframeAPIReady = onYouTubeReady;
+    }
+
+    return () => {
+      if (playerRef.current?.destroy) {
+        playerRef.current.destroy();
+      }
+      setPlayerReady(false);
     };
   }, [videoId]);
 
@@ -203,15 +221,15 @@ const Modules = () => {
   // Update video when changed
   useEffect(() => {
     if (playerRef.current && videoId && playerReady) {
-      playerRef.current.loadVideoById(videoId);
+      // playerRef.current.loadVideoById(videoId);
     }
   }, [videoId, playerReady]);
 
-  const handlePlay = () => {
-    if (playerReady && playerRef.current) {
-      playerRef.current.playVideo();
-    }
-  };
+  // const handlePlay = () => {
+  //   if (playerReady && playerRef.current) {
+  //     playerRef.current.playVideo();
+  //   }
+  // };
 
   if (loading) return <p>Loading modules...</p>;
   if (error) return <p>Error loading modules: {error.message || error}</p>;
@@ -229,77 +247,76 @@ const Modules = () => {
 
       {/* ✅ YouTube Player */}
       {videoId ? (
-       <div
-      ref={containerRef}
-      onClick={togglePlayPause}
-      className="relative w-full max-w-4xl h-[500px] mx-auto mt-10 overflow-hidden rounded-lg bg-black cursor-pointer"
-    >
-      {/* YouTube Player */}
-      <div
-        ref={playerContainerRef}
-        className="w-full h-full pointer-events-none"
-        id="videoFrame"
-      />
-
-      {/* Play Icon Center */}
-      {!isPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="bg-white/20 hover:bg-white/30 rounded-full p-6 transition duration-200">
-            <svg
-              className="w-10 h-10 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
-      )}
-
-      {/* Custom Controls */}
-      {isPlaying && (
         <div
-          onClick={(e) => e.stopPropagation()} // prevent closing video on control click
-          className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 px-4 py-2 bg-black/60 text-white rounded"
+          ref={containerRef}
+          onClick={togglePlayPause}
+          className="relative w-full max-w-4xl h-[500px] mx-auto mt-10 overflow-hidden rounded-lg bg-black cursor-pointer"
         >
-          <div className="flex gap-2 items-center">
-            <button onClick={togglePlayPause} className="px-2 py-1 bg-white/10 rounded">
-              ⏸ Pause
-            </button>
-            <span className="text-sm">
-              {formatTime(currentTime)} / {formatTime(duration)}
-            </span>
-          </div>
-
-          <input
-            type="range"
-            min="0"
-            max={duration}
-            value={currentTime}
-            onChange={handleSeek}
-            className="w-full h-1 accent-orange-400"
+          {/* YouTube Player */}
+          <div
+            ref={playerContainerRef}
+            className="w-full h-full pointer-events-none"
+            id="videoFrame"
           />
 
+          {/* Play Icon Center */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="bg-white/20 hover:bg-white/30 rounded-full p-6 transition duration-200">
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          )}
+
+          {/* Custom Controls */}
+          {isPlaying && (
+            <div
+              onClick={(e) => e.stopPropagation()} // prevent closing video on control click
+              className={`absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 px-4 py-2  ${isPlaying && "hidden"} bg-black/60 text-white rounded`}
+            >
+              <div className="flex gap-2 items-center">
+                {/* <button
+                  onClick={togglePlayPause}
+                  className="px-2 py-1 bg-white/10 rounded"
+                >
+                  ⏸ Pause
+                </button> */}
+                <span className="text-sm">
+                  {formatTime(currentTime)} / {formatTime(duration)}
+                </span>
+              </div>
+
+              <input
+                type="range"
+                min="0"
+                max={duration}
+                value={currentTime}
+                onChange={handleSeek}
+                className={`w-full h-[1px] accent-orange-400`}
+              />
+            </div>
+          )}
 
           {/* Fullscreen Button */}
-
+          <button
+            onClick={toggleFullscreen}
+            className="absolute bottom-4 right-4 px-3 py-1 bg-amber-500 rounded  transition text-black z-10"
+            title="Toggle Fullscreen"
+          >
+            ⛶
+          </button>
+          {playerReady && !isPlaying && currentTime >= duration - 1 && (
+            <div className="absolute inset-0 bg-black/90 flex items-center justify-center text-white text-lg font-semibold">
+              Video Ended
+            </div>
+          )}
         </div>
-      )}
-
-      {/* Fullscreen Button */}
-      <button
-        onClick={toggleFullscreen}
-        className="absolute bottom-4 right-4 px-3 py-1 bg-amber-500 rounded hover:bg-white/20 transition text-black z-10"
-        title="Toggle Fullscreen"
-      >
-        ⛶
-      </button>
-      {playerReady && !isPlaying && currentTime >= duration - 1 && (
-        <div className="absolute inset-0 bg-black/90 flex items-center justify-center text-white text-lg font-semibold">
-          Video Ended
-        </div>
-      )}
-    </div>
       ) : (
         <p className="text-red-500 mt-5">Invalid or missing video link.</p>
       )}
@@ -371,10 +388,6 @@ const Modules = () => {
 };
 
 export default Modules;
-
-
-
-
 
 // ei code ta main, working nicely
 
@@ -580,6 +593,3 @@ export default Modules;
 // };
 
 // export default Modules;
-
-
-
