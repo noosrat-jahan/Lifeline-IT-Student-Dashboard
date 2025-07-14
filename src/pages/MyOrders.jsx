@@ -19,10 +19,10 @@ const MyOrders = () => {
               <col />
               <col />
               <col />
-              <col className="w-24" />
+              <col />
             </colgroup>
             <thead className="">
-              <tr className="text-center text-base">
+              <tr className="text-center lg:text-base text-sm ">
                 <th className="p-3">No</th>
                 <th className="p-3">Date</th>
                 <th className="p-3">Total</th>
@@ -37,7 +37,7 @@ const MyOrders = () => {
                   <p>SRDON908</p>
                 </td>
                 <td className="p-3">
-                  <p>14 Jan 2022</p>
+                  <p>14,Jan,2022</p>
                 </td>
                 <td className="p-3">
                   <p>4300.00</p>

@@ -8,7 +8,12 @@ import {
   MdOutlineShoppingCart,
 } from "react-icons/md";
 import { RiGraduationCapFill } from "react-icons/ri";
-import { FaRegClock, FaRegComment, FaUserGraduate } from "react-icons/fa";
+import {
+  FaBars,
+  FaRegClock,
+  FaRegComment,
+  FaUserGraduate,
+} from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import { GrCertificate } from "react-icons/gr";
 import { IoNewspaperOutline } from "react-icons/io5";
@@ -100,13 +105,6 @@ const SideNav = () => {
               className="w-full lg:w-1/2"
             />
           </Link>
-
-          <div
-            className="text-[#0B254C] text-lg lg:hidden"
-            onClick={toggleNavbar}
-          >
-            <AiOutlineMenuFold />
-          </div>
 
           {/* Mobile Drawer */}
           <div
@@ -343,8 +341,16 @@ const SideNav = () => {
       </section>
 
       {/* <!-- Main Layout --> */}
-      <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 mt-10 px-2 lg:px-4">
-        {/* <!-- Sidebar --> */}
+      <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 lg:mt-10 px-2 lg:px-4">
+        {
+          <div
+            className="text-[#0B254C] text-lg lg:hidden flex justify-end mr-4 mb-4"
+            onClick={toggleNavbar}
+          >
+            <FaBars />
+          </div>
+          /* <!-- Sidebar --> */
+        }
         <aside className="lg:w-1/4 w-full hidden lg:block">
           <div className="bg-white shadow-card rounded-xl p-6">
             <div className="uppercase text-sm text-gray-500 mb-4">
