@@ -1,44 +1,50 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import axios from "axios"
+import React, { useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { useNavigate } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const ChangePass = () => {
+  const navigate = useNavigate()
   // const [errorMessage, setErrorMessage] = useState("");
   const handleChangePassword = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
 
-    console.log(data);
+    console.log(data)
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         // setErrorMessage(res.data.message);
-        const data = res.data;
+        const data = res.data
         if (data.success) {
           toast.success(data.message, {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 3000,
             closeOnClick: true,
-            draggable: true,
+            draggable: false,
             theme: "dark",
-          });
+          })
+
+          setTimeout(() => {
+            navigate("/")
+          }, 4000)
         } else {
           toast.error(data.message, {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 3000,
             closeOnClick: true,
-            draggable: true,
+            draggable: false,
             theme: "dark",
-          });
+          })
         }
-      });
-  };
+      })
+  }
 
   return (
     <div>
@@ -109,7 +115,7 @@ const ChangePass = () => {
       </div>
       <ToastContainer></ToastContainer>
     </div>
-  );
-};
+  )
+}
 
-export default ChangePass;
+export default ChangePass

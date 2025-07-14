@@ -376,7 +376,8 @@ export default Modules;
 
 
 
-// ei code ta main, working good
+// ei code ta main, working nicely
+
 // import useCourseDetails from "@/hooks/useCourseDetails";
 // import React, { useEffect, useState } from "react";
 // import { Link, useParams } from "react-router-dom";

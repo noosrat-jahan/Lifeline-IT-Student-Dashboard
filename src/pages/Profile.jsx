@@ -1,77 +1,82 @@
-import { dashboardData } from "@/hooks/dashboardData";
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { FaUpload } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { dashboardData } from "@/hooks/dashboardData"
+import axios from "axios"
+import React, { useEffect, useRef, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { FaUpload } from "react-icons/fa"
+import { useLocation, useNavigate } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error, refetch } = dashboardData()
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
 
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(""); // ✅ new
+  const [gender, setGender] = useState(data.gender || "")
+  const [dob, setDob] = useState(data.dateOfBirth || "")
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (data) {
-      setGender(data.gender || "");
+      setGender(data.gender || "")
     }
-  }, [data]);
+  }, [data])
 
   async function uploadImage(file) {
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38";
-    const formData = new FormData();
-    formData.append("image", file);
+    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
+    const formData = new FormData()
+    formData.append("image", file)
 
     const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: "POST",
       body: formData,
-    });
+    })
 
-    const data = await res.json();
+    const data = await res.json()
     if (data?.data?.url) {
-      setUploadedImageUrl(data.data.url); // ✅ set URL
+      setUploadedImageUrl(data.data.url) // ✅ set URL
     }
-    console.log("Image URL:", data.data.url);
+    console.log("Image URL:", data.data.url)
   }
 
   const handleChangeProfile = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    data.gender = gender;
-    data.dateOfBirth = dob;
-    console.log(data);
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+    data.gender = gender
+    data.dateOfBirth = dob
+    console.log(data)
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         if (res.data.success) {
-          Swal.fire({
-            title: `Profile has been updated!`,
-            icon: "success",
-            draggable: true,
-          });
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            draggable: false,
+            theme: "dark",
+          })
 
           setTimeout(() => {
-            navigate("/");
-          }, 3000);
+            navigate("/")
+          }, 4000)
         } else {
-          Swal.fire({
-            title: `Something went wrong!`,
-            icon: "error",
-            draggable: true,
-          });
+          toast.error(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            draggable: false,
+            theme: "dark",
+          })
         }
-      });
-  };
+      })
+  }
 
   return (
     <div>
@@ -106,9 +111,9 @@ const Profile = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
-                  const file = e.target.files[0];
+                  const file = e.target.files[0]
                   if (file) {
-                    uploadImage(file);
+                    uploadImage(file)
                   }
                 }}
                 className="hidden"
@@ -243,8 +248,9 @@ const Profile = () => {
           </div>
         </form>
       </div>
+      <ToastContainer></ToastContainer>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
