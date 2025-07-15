@@ -38,7 +38,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 import { CiLock } from "react-icons/ci";
-import { FaArrowRightFromBracket, FaBarsStaggered } from "react-icons/fa6";
+import {
+  FaAnglesDown,
+  FaArrowRightFromBracket,
+  FaBarsStaggered,
+} from "react-icons/fa6";
 import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io";
 import { dashboardData } from "@/hooks/dashboardData";
 import useNotice from "@/hooks/useNotice";
@@ -69,41 +73,44 @@ const SideNav = () => {
 
   const { data, isLoading, error, refetch } = dashboardData();
   const { notices, loading } = useNotice();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
- const handleLogout = async () => {
-  try {
-    await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/auth/logout`,
-      
-      {
-        withCredentials: true,
-      }
-    );
-
-    // Optional: LocalStorage থেকে token মুছে ফেলা
-    localStorage.removeItem("token");
-
-    Swal.fire({
-      title: `${data?.name} is successfully logged out`,
-      icon: "success",
-      timer: 2000,
-      showConfirmButton: false,
-    });
-
-    // ২ সেকেন্ড পরে redirect
-    // setTimeout(() => {
-    //   window.location.href = "https://lifelineit-d5cbf.web.app/login";
-    // }, 2000);
-  } catch (error) {
-    console.error("Logout failed:", error);
-    Swal.fire({
-      title: "Logout failed!",
-      text: error.response?.data?.message || "Something went wrong",
-      icon: "error",
-    });
+  if (!data || data.status === false) {
+    window.location.href = `${import.meta.env.VITE_PUBLIC_PAGE}/login`;
   }
-};
+  const handleLogout = async () => {
+    try {
+      await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Optional: LocalStorage থেকে token মুছে ফেলা
+      // localStorage.removeItem("token");
+
+      Swal.fire({
+        title: `${data?.name} is successfully logged out`,
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      // ২ সেকেন্ড পরে redirect
+      setTimeout(() => {
+        window.location.href = `${import.meta.env.VITE_PUBLIC_PAGE}`;
+      }, 2000);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      Swal.fire({
+        title: "Logout failed!",
+        text: error.response?.data?.message || "Something went wrong",
+        icon: "error",
+      });
+    }
+  };
 
   if (isLoading)
     return (
@@ -123,7 +130,10 @@ const SideNav = () => {
       {/* <!-- Navigation --> */}
       <header className="sticky top-0 z-50 bg-white shadow">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center h-16 px-4">
-          <Link to="/dashboard" className="w-1/2 md:w-1/4">
+          <Link
+            to={`${import.meta.env.VITE_PUBLIC_PAGE}`}
+            className="w-1/2 md:w-1/4"
+          >
             <img
               src={logo}
               alt="SR DREAM IT Logo"
@@ -131,14 +141,11 @@ const SideNav = () => {
             />
           </Link>
 
-           <div
+          <div
             className="text-[#0B254C] text-2xl lg:hidden flex justify-end"
             onClick={toggleNavbar}
           >
-           <FaAngleDoubleUp />
-
-
-
+            {isOpen ? <FaAnglesDown /> : <FaAngleDoubleUp />}
           </div>
 
           {/* Mobile Drawer */}
@@ -173,7 +180,6 @@ const SideNav = () => {
                 onClick={() => setIsOpen(false)}
                 className="flex flex-col items-start justify-center gap-6 text-base text-neutral-700 font-normal font-roboto"
               >
-                
                 <li>
                   <NavLink
                     to="/dashboard"
@@ -346,10 +352,12 @@ const SideNav = () => {
       </header>
 
       {/* <!-- Hero Banner --> */}
-      <section className="bg-white py-10">
-        <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[300px] lg:min-h-[240px] ">
+      <section className="bg-white py-10 px-2">
+        <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[250px] lg:min-h-[240px] ">
           <div className="flex-1 bg-gradient-to-l from-[#0B254C] via-[#266ea1] to-[#041630] text-white  flex flex-col justify-center">
-            <h1 className="text-3xl font-bold">Where Learners Meet Success</h1>
+            <h1 className="text-xl lg:text-3xl font-bold">
+              Where Learners Meet Success
+            </h1>
             <p className="text-[#ffc25a] font-bold text-sm lg:text-lg my-6 pb-2">
               40K+ Students $3.5M+ Earned*
             </p>
@@ -365,10 +373,10 @@ const SideNav = () => {
           </div>
 
           <div className="absolute left-40 bottom-4 lg:bottom-8 text-gray-800">
-            <div className="text-xl font-semibold text-white mb-2 pr-2">
+            <div className="text-sm -ml-6 lg:text-xl font-semibold text-white mb-2 pr-2">
               {data?.name}
             </div>
-            <div className="text-sm text-gray-100">{data?.sid}</div>
+            <div className="text-xs -ml-8 text-gray-100">{data?.sid}</div>
           </div>
 
           {/* <div className="absolute right-3 bottom-0 md:bottom-2 lg:bottom-4 text-xs text-gray-600">
@@ -379,10 +387,7 @@ const SideNav = () => {
 
       {/* <!-- Main Layout --> */}
       <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 lg:mt-10 px-2 lg:px-4">
-        {
-         
-          /* <!-- Sidebar --> */
-        }
+        {/* <!-- Sidebar --> */}
         <aside className="lg:w-1/4 w-full hidden lg:block">
           <div className="bg-white shadow-card rounded-xl p-6">
             <div className="uppercase text-sm text-gray-500 mb-4">

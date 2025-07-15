@@ -29,16 +29,16 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("image", file);
 
-    // const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-    //   method: "POST",
-    //   body: formData,
-    // })
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+      method: "POST",
+      body: formData,
+    })
 
-    // const data = await res.json()
-    // if (data?.data?.url) {
-    //   setUploadedImageUrl(data.data.url) // ✅ set URL
-    // }
-    // console.log("Image URL:", data.data.url)
+    const data = await res.json()
+    if (data?.data?.url) {
+      setUploadedImageUrl(data.data.url) // ✅ set URL
+    }
+    console.log("Image URL:", data.data.url)
   }
 
   const handleChangeProfile = async (e) => {

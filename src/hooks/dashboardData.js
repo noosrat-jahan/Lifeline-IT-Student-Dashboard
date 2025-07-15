@@ -10,6 +10,10 @@ export const dashboardData = () => {
         { withCredentials: true },
         
       );
+      if(res.data.status === false || !(res.data)){
+         window.location.href = `${import.meta.env.VITE_PUBLIC_PAGE}/login`;
+      }
+      console.log(res)
       return res.data;
     },
     onError: (error) => {
