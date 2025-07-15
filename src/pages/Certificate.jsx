@@ -1,23 +1,23 @@
-import { dashboardData } from "@/hooks/dashboardData";
-import useCourses from "@/hooks/useCourses";
-import axios from "axios";
-import React, { useRef, useState } from "react";
-import { Helmet } from "react-helmet";
-import { FaDownload } from "react-icons/fa";
+import { dashboardData } from "@/hooks/dashboardData"
+import useCourses from "@/hooks/useCourses"
+import axios from "axios"
+import React, { useRef, useState } from "react"
+import { Helmet } from "react-helmet"
+import { FaDownload } from "react-icons/fa"
 
 const Certificate = () => {
-  const [btnloading, setBtnloading] = useState(null);
-  const { data, isLoading, error } = dashboardData();
+  const [btnloading, setBtnloading] = useState(null)
+  const { data, isLoading, error } = dashboardData()
 
-  console.log(data.totalOrders[0].certificate, isLoading, error);
+  console.log(data.totalOrders[0].certificate, isLoading, error)
 
-  const { courses } = useCourses();
-  console.log(courses);
+  const { courses } = useCourses()
+  console.log(courses)
 
-  const downloadRef = useRef({});
+  const downloadRef = useRef({})
 
   const handleDownload = async (id, courseTitle) => {
-    setBtnloading(id);
+    setBtnloading(id)
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/dashboard/certificate`,
@@ -28,26 +28,26 @@ const Certificate = () => {
           },
           responseType: "blob",
         }
-      );
+      )
 
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const a = document.createElement("a");
-      a.href = url;
+      const url = window.URL.createObjectURL(new Blob([res.data]))
+      const a = document.createElement("a")
+      a.href = url
       a.download =
         data.name.split(" ").join("_") +
         "-" +
         courseTitle.split(" ").join("_") +
-        "-certificate.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+        "-certificate.pdf"
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     } finally {
-      setBtnloading(null);
+      setBtnloading(null)
     }
-  };
+  }
   return (
     <div>
       <Helmet>
@@ -79,11 +79,11 @@ const Certificate = () => {
                 <td className="w-1/4 pr-4 border-b border-gray-300">
                   <button
                     onClick={() => {
-                      if (downloadRef.current[course._id]) return; // already downloading
-                      downloadRef.current[course._id] = true; // mark as downloading
+                      if (downloadRef.current[course._id]) return // already downloading
+                      downloadRef.current[course._id] = true // mark as downloading
                       handleDownload(course._id, course.title).finally(() => {
-                        downloadRef.current[course._id] = false; // mark as done
-                      });
+                        downloadRef.current[course._id] = false // mark as done
+                      })
                     }}
                     disabled={btnloading === course._id}
                     className={`w-full flex mx-auto justify-center py-2 px-2 font-semibold rounded-md bg-gradient-to-l from-[#0B254C] via-[#266ea1] to-[#041630] text-white cursor-pointer ${
@@ -111,7 +111,7 @@ const Certificate = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Certificate;
+export default Certificate

@@ -1,117 +1,89 @@
-import React, { useState } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import logo from "../../assets/Website Logo.png";
-import MyCourses from "../../pages/MyCourses";
+import React, { useState } from "react"
+import { Link, NavLink, Outlet } from "react-router-dom"
+import logo from "../../assets/Website Logo.png"
+import MyCourses from "../../pages/MyCourses"
 import {
   MdOutlineHome,
   MdOutlineInsertComment,
   MdOutlineShoppingCart,
-} from "react-icons/md";
-import { RiGraduationCapFill } from "react-icons/ri";
+} from "react-icons/md"
+import { RiGraduationCapFill } from "react-icons/ri"
 import {
   FaAngleDoubleUp,
   FaBars,
   FaRegClock,
   FaRegComment,
   FaUserGraduate,
-} from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
-import { GrCertificate } from "react-icons/gr";
-import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5";
+} from "react-icons/fa"
+import { FiHome } from "react-icons/fi"
+import { GrCertificate } from "react-icons/gr"
+import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5"
 
-import student from "../../assets/student.jpg";
+import student from "../../assets/student.jpg"
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import axios from "axios";
-import Swal from "sweetalert2";
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import Menu from "@mui/material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
+import Container from "@mui/material/Container"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
+import MenuItem from "@mui/material/MenuItem"
+import AdbIcon from "@mui/icons-material/Adb"
+import axios from "axios"
 
-import { CiLock } from "react-icons/ci";
-import {
-  FaAnglesDown,
-  FaArrowRightFromBracket,
-  FaBarsStaggered,
-} from "react-icons/fa6";
-import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io";
-import { dashboardData } from "@/hooks/dashboardData";
-import useNotice from "@/hooks/useNotice";
-import { AiOutlineMenuFold } from "react-icons/ai";
+import { CiLock } from "react-icons/ci"
+import { FaArrowRightFromBracket } from "react-icons/fa6"
+import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io"
+import { dashboardData } from "@/hooks/dashboardData"
+import useNotice from "@/hooks/useNotice"
+import { AiOutlineMenuFold } from "react-icons/ai"
 
 const SideNav = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const toggleNavbar = () => setIsOpen(!isOpen);
+  const toggleNavbar = () => setIsOpen(!isOpen)
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
-  const { data, isLoading, error, refetch } = dashboardData();
-  const { notices, loading } = useNotice();
-  const navigate = useNavigate();
+  const { data, isLoading, error, refetch } = dashboardData()
+  const { notices, loading } = useNotice()
 
   if (!data || data.status === false) {
     window.location.href = `${import.meta.env.VITE_PUBLIC_PAGE}/login`;
   }
   const handleLogout = async () => {
-    try {
-      await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+    await axios.get(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
+      withCredentials: true,
+    })
 
-        {
-          withCredentials: true,
-        }
-      );
-
-      // Optional: LocalStorage থেকে token মুছে ফেলা
-      // localStorage.removeItem("token");
-
-      Swal.fire({
-        title: `${data?.name} is successfully logged out`,
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-
-      // ২ সেকেন্ড পরে redirect
-      setTimeout(() => {
-        window.location.href = `${import.meta.env.VITE_PUBLIC_PAGE}`;
-      }, 2000);
-    } catch (error) {
-      console.error("Logout failed:", error);
-      Swal.fire({
-        title: "Logout failed!",
-        text: error.response?.data?.message || "Something went wrong",
-        icon: "error",
-      });
-    }
-  };
-
+    // Swal.fire({
+    //   title: `${data?.name} is successfully logged out`,
+    //   icon: "success",
+    //   draggable: true,
+    // });
+    //  এখানে টোস্ট ব্যবহার করা যেতে পারে, করে দিয়েন আপি 😊
+  }
   if (isLoading)
     return (
       <div>
@@ -123,7 +95,7 @@ const SideNav = () => {
           </div>
         </div>
       </div>
-    );
+    )
 
   return (
     <div>
@@ -145,7 +117,7 @@ const SideNav = () => {
             className="text-[#0B254C] text-2xl lg:hidden flex justify-end"
             onClick={toggleNavbar}
           >
-            {isOpen ? <FaAnglesDown /> : <FaAngleDoubleUp />}
+            <FaAngleDoubleUp />
           </div>
 
           {/* Mobile Drawer */}
@@ -486,7 +458,7 @@ const SideNav = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SideNav;
+export default SideNav
