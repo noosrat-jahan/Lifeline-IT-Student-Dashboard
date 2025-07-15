@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/Website Logo.png";
 import MyCourses from "../../pages/MyCourses";
 import {
@@ -69,18 +69,42 @@ const SideNav = () => {
 
   const { data, isLoading, error, refetch } = dashboardData();
   const { notices, loading } = useNotice();
+  const navigate = useNavigate()
 
-  const handleLogout = async () => {
-    await axios.post(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
-      withCredentials: true,
-    });
+ const handleLogout = async () => {
+  try {
+    await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+      
+      {
+        withCredentials: true,
+      }
+    );
+
+    // Optional: LocalStorage থেকে token মুছে ফেলা
+    localStorage.removeItem("token");
 
     Swal.fire({
       title: `${data?.name} is successfully logged out`,
       icon: "success",
-      draggable: true,
+      timer: 2000,
+      showConfirmButton: false,
     });
-  };
+
+    // ২ সেকেন্ড পরে redirect
+    // setTimeout(() => {
+    //   window.location.href = "https://lifelineit-d5cbf.web.app/login";
+    // }, 2000);
+  } catch (error) {
+    console.error("Logout failed:", error);
+    Swal.fire({
+      title: "Logout failed!",
+      text: error.response?.data?.message || "Something went wrong",
+      icon: "error",
+    });
+  }
+};
+
   if (isLoading)
     return (
       <div>
@@ -323,10 +347,10 @@ const SideNav = () => {
 
       {/* <!-- Hero Banner --> */}
       <section className="bg-white py-10">
-        <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[350px] lg:min-h-[240px] ">
+        <div className="max-w-screen-xl mx-auto bg-white rounded-xl shadow-card overflow-hidden flex flex-col lg:flex-row relative min-h-[300px] lg:min-h-[240px] ">
           <div className="flex-1 bg-gradient-to-l from-[#0B254C] via-[#266ea1] to-[#041630] text-white  flex flex-col justify-center">
             <h1 className="text-3xl font-bold">Where Learners Meet Success</h1>
-            <p className="text-[#ffc25a] font-bold text-sm lg:text-lg mt-3">
+            <p className="text-[#ffc25a] font-bold text-sm lg:text-lg my-6 pb-2">
               40K+ Students $3.5M+ Earned*
             </p>
           </div>
@@ -341,7 +365,7 @@ const SideNav = () => {
           </div>
 
           <div className="absolute left-40 bottom-4 lg:bottom-8 text-gray-800">
-            <div className="text-xl font-semibold text-white mb-2">
+            <div className="text-xl font-semibold text-white mb-2 pr-2">
               {data?.name}
             </div>
             <div className="text-sm text-gray-100">{data?.sid}</div>

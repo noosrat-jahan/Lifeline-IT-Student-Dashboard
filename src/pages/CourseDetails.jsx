@@ -91,7 +91,7 @@ const CourseDetails = () => {
         <Accordion
           type="single"
           collapsible
-          className="w-full  p-4 mx-auto"
+          className="w-full  p-1 mx-auto"
         >
           {liveSupport.map((zoom) => (
             <AccordionItem value={zoom} key={zoom}>
@@ -106,7 +106,7 @@ const CourseDetails = () => {
         </Accordion>
 
         <h1 className="font-bold text-lg pt-5">Zoom live Class Link</h1>
-        <Accordion type="single" collapsible className="w-full p-4 mx-auto">
+        <Accordion type="single" collapsible className="w-full p-1 mx-auto">
           {liveClasses.map((liveClass) => (
             <AccordionItem value={liveClass} key={liveClass}>
               <AccordionTrigger className="text-left text-lg font-medium py-4">

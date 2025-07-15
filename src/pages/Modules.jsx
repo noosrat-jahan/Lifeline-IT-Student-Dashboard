@@ -250,7 +250,7 @@ const Modules = () => {
         <div
           ref={containerRef}
           onClick={togglePlayPause}
-          className="relative w-full max-w-4xl h-[500px] mx-auto mt-10 overflow-hidden rounded-lg bg-black cursor-pointer"
+          className="relative w-full max-w-4xl h-[250px] md:h-[350px] lg:h-[450px] mx-auto mt-10 overflow-hidden rounded-lg bg-black cursor-pointer"
         >
           {/* YouTube Player */}
           <div
