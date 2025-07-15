@@ -6,18 +6,18 @@ import {
   MdOutlineHome,
   MdOutlineInsertComment,
   MdOutlineShoppingCart,
-} from "react-icons/md";
-import { RiGraduationCapFill } from "react-icons/ri";
+} from "react-icons/md"
+import { RiGraduationCapFill } from "react-icons/ri"
 import {
   FaAngleDoubleUp,
   FaBars,
   FaRegClock,
   FaRegComment,
   FaUserGraduate,
-} from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
-import { GrCertificate } from "react-icons/gr";
-import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5";
+} from "react-icons/fa"
+import { FiHome } from "react-icons/fi"
+import { GrCertificate } from "react-icons/gr"
+import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5"
 
 import student from "../../assets/student.jpg"
 
@@ -36,21 +36,12 @@ import MenuItem from "@mui/material/MenuItem"
 import AdbIcon from "@mui/icons-material/Adb"
 import axios from "axios"
 
-<<<<<<< HEAD
 import { CiLock } from "react-icons/ci"
 import { FaArrowRightFromBracket } from "react-icons/fa6"
 import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io"
 import { dashboardData } from "@/hooks/dashboardData"
 import useNotice from "@/hooks/useNotice"
 import { AiOutlineMenuFold } from "react-icons/ai"
-=======
-import { CiLock } from "react-icons/ci";
-import { FaArrowRightFromBracket, FaBarsStaggered } from "react-icons/fa6";
-import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io";
-import { dashboardData } from "@/hooks/dashboardData";
-import useNotice from "@/hooks/useNotice";
-import { AiOutlineMenuFold } from "react-icons/ai";
->>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
 
 const SideNav = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -79,7 +70,7 @@ const SideNav = () => {
   const { notices, loading } = useNotice()
 
   const handleLogout = async () => {
-    await axios.post(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
+    await axios.get(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
       withCredentials: true,
     })
 
@@ -116,14 +107,11 @@ const SideNav = () => {
             />
           </Link>
 
-           <div
+          <div
             className="text-[#0B254C] text-2xl lg:hidden flex justify-end"
             onClick={toggleNavbar}
           >
-           <FaAngleDoubleUp />
-
-
-
+            <FaAngleDoubleUp />
           </div>
 
           {/* Mobile Drawer */}
@@ -158,7 +146,6 @@ const SideNav = () => {
                 onClick={() => setIsOpen(false)}
                 className="flex flex-col items-start justify-center gap-6 text-base text-neutral-700 font-normal font-roboto"
               >
-                
                 <li>
                   <NavLink
                     to="/dashboard"
@@ -364,10 +351,7 @@ const SideNav = () => {
 
       {/* <!-- Main Layout --> */}
       <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 lg:mt-10 px-2 lg:px-4">
-        {
-         
-          /* <!-- Sidebar --> */
-        }
+        {/* <!-- Sidebar --> */}
         <aside className="lg:w-1/4 w-full hidden lg:block">
           <div className="bg-white shadow-card rounded-xl p-6">
             <div className="uppercase text-sm text-gray-500 mb-4">

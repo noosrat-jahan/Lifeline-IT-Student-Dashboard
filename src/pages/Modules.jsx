@@ -1,59 +1,41 @@
-import useCourseDetails from "@/hooks/useCourseDetails";
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
->>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
+import useCourseDetails from "@/hooks/useCourseDetails"
+import React, { useEffect, useRef, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-<<<<<<< HEAD
 } from "@/components/ui/accordion"
 import { Helmet } from "react-helmet-async"
-=======
-} from "@/components/ui/accordion";
-import { Helmet } from "react-helmet-async";
 
 // Extract YouTube video ID from URL
 function getYouTubeVideoId(url) {
   try {
-<<<<<<< HEAD
     const parsedUrl = new URL(url)
     if (parsedUrl.hostname.includes("youtube.com"))
       return parsedUrl.searchParams.get("v")
     if (parsedUrl.hostname === "youtu.be") return parsedUrl.pathname.slice(1)
-=======
-    const parsedUrl = new URL(url);
-    if (parsedUrl.hostname.includes("youtube.com"))
-      return parsedUrl.searchParams.get("v");
-    if (parsedUrl.hostname === "youtu.be") return parsedUrl.pathname.slice(1);
-    if (
-      parsedUrl.hostname === "www.youtube.com" &&
-      parsedUrl.pathname.startsWith("/embed/")
-    )
-      return parsedUrl.pathname.split("/embed/")[1];
-    return null;
->>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
   } catch {
     return null
   }
 }
 
 const Modules = () => {
-  const [vidUrl, setVidUrl] = useState("");
-  const [resources, setResources] = useState([]);
-  const { route } = useParams();
-  const { course, loading, error } = useCourseDetails(route);
-  const [activeModuleIndex, setActiveModuleIndex] = useState(null);
+  const [vidUrl, setVidUrl] = useState("")
+  const [resources, setResources] = useState([])
+  const { route } = useParams()
+  const { course, loading, error } = useCourseDetails(route)
+  const [activeModuleIndex, setActiveModuleIndex] = useState(null)
 
-  const containerRef = useRef(null); // For fullscreen container (outer div)
-  const playerContainerRef = useRef(null); // For YouTube player div (inner div)
->>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
-
-  const videoId = getYouTubeVideoId(vidUrl)
+  const containerRef = useRef(null)
   const playerRef = useRef(null)
   const [playerReady, setPlayerReady] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
 
+  const videoId = getYouTubeVideoId(vidUrl)
   const modules = course?.modules
 
   // Set initial video & resources
@@ -63,91 +45,84 @@ const Modules = () => {
       setResources(course.modules[0].resources || [])
       setActiveModuleIndex(0)
     }
-<<<<<<< HEAD
   }, [course])
 
+  // YouTube Iframe API loader and player initializer
   useEffect(() => {
-    const existingScript = document.getElementById("youtube-api-script")
+    const existingScript = document.getElementById("youtube-api")
     if (!existingScript) {
-      const tag = document.createElement("script")
-      tag.id = "youtube-api-script"
-      tag.src = "https://www.youtube.com/iframe_api"
-      document.body.appendChild(tag)
-=======
-  }, [course]);
-
-  useEffect(() => {
-    const existingScript = document.getElementById("youtube-api-script");
-    if (!existingScript) {
-      const tag = document.createElement("script");
-      tag.id = "youtube-api-script";
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(tag);
+      const script = document.createElement("script")
+      script.id = "youtube-api"
+      script.src = "https://www.youtube.com/iframe_api"
+      document.body.appendChild(script)
     }
 
-    const onYouTubeReady = () => {
-      if (playerContainerRef.current) {
-        playerRef.current = new window.YT.Player(playerContainerRef.current, {
+    window.onYouTubeIframeAPIReady = () => {
+      if (videoId) {
+        playerRef.current = new window.YT.Player("videoFrame", {
           videoId,
+          events: {
+            onReady: () => setPlayerReady(true),
+            onStateChange: (event) => {
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                setIsPlaying(true)
+              } else {
+                setIsPlaying(false)
+              }
+            },
+          },
           playerVars: {
-            autoplay: 0,
+            autoplay: 0, // prevent autoplay
             rel: 0,
             modestbranding: 1,
             controls: 0,
-            showinfo: 0,
             fs: 0,
+            showinfo: 0,
             disablekb: 1,
-            iv_load_policy: 3,
-            origin: window.location.origin,
           },
-          events: {
-            onReady: () => {
-              setPlayerReady(true);
-              setDuration(playerRef.current.getDuration());
-            },
-          },
-        });
+        })
       }
-    };
-
-    if (window.YT && window.YT.Player) {
-      onYouTubeReady();
-    } else {
-      window.onYouTubeIframeAPIReady = onYouTubeReady;
     }
 
     return () => {
-      if (playerRef.current?.destroy) {
-        playerRef.current.destroy();
-      }
-      setPlayerReady(false);
-    };
-  }, [videoId]);
->>>>>>> 1115a5812ebd38394ba956ad827ab420437c430e
+      window.onYouTubeIframeAPIReady = null
+    }
+  }, [videoId])
 
-  // ⌨️ Keyboard Shortcut UseEffect
+  // Toggle play/pause
+  const togglePlayPause = () => {
+    if (!playerRef.current) return
+    const state = playerRef.current.getPlayerState()
+    if (state === window.YT.PlayerState.PLAYING) {
+      playerRef.current.pauseVideo()
+    } else {
+      playerRef.current.playVideo()
+    }
+  }
+
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!playerReady) return
-
       const video = playerRef.current
 
       if (e.key === "ArrowRight") {
         const current = video.getCurrentTime()
-        video.seekTo(current + 5, true) // ⏩ Forward
+        video.seekTo(current + 5, true)
       } else if (e.key === "ArrowLeft") {
         const current = video.getCurrentTime()
-        video.seekTo(Math.max(current - 5, 0), true) // ⏪ Backward
+        video.seekTo(Math.max(current - 5, 0), true)
       } else if (e.key === " ") {
         e.preventDefault()
-        togglePlayPause() // Space toggles play/pause
+        togglePlayPause()
       }
     }
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [playerReady, togglePlayPause])
+  }, [playerReady])
 
+  // Track current time
   useEffect(() => {
     let interval
     if (isPlaying) {
@@ -176,69 +151,16 @@ const Modules = () => {
     return `${mins}:${secs}`
   }
 
-  // Fullscreen toggle function
   const toggleFullscreen = (e) => {
     e.stopPropagation()
     if (!containerRef.current) return
 
     if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen().catch(() => {
-        // fail silently or add fallback
-      })
+      containerRef.current.requestFullscreen().catch(() => {})
     } else {
-      document.exitFullscreen().catch(() => {
-        // fail silently or add fallback
-      })
+      document.exitFullscreen().catch(() => {})
     }
   }
-  // Load YouTube Iframe API once
-  // useEffect(() => {
-  //   const existingScript = document.getElementById("youtube-api");
-  //   if (!existingScript) {
-  //     const script = document.createElement("script");
-  //     script.id = "youtube-api";
-  //     script.src = "https://www.youtube.com/iframe_api";
-  //     document.body.appendChild(script);
-  //   }
-
-  //   window.onYouTubeIframeAPIReady = () => {
-  //     if (videoId) {
-  //       playerRef.current = new window.YT.Player("videoFrame", {
-  //         videoId,
-  //         events: {
-  //           onReady: () => setPlayerReady(true),
-  //         },
-  //         playerVars: {
-  //           rel: 0,
-  //           modestbranding: 1,
-  //           controls: 0,
-  //           fs: 0,
-  //           showinfo: 0,
-  //           disablekb: 1,
-  //         },
-  //       });
-  //     }
-  //   };
-
-  //   document.addEventListener("contextmenu", (e) => e.preventDefault());
-
-  //   return () => {
-  //     document.removeEventListener("contextmenu", (e) => e.preventDefault());
-  //   };
-  // }, []);
-
-  // Update video when changed
-  useEffect(() => {
-    if (playerRef.current && videoId && playerReady) {
-      // playerRef.current.loadVideoById(videoId);
-    }
-  }, [videoId, playerReady]);
-
-  // const handlePlay = () => {
-  //   if (playerReady && playerRef.current) {
-  //     playerRef.current.playVideo();
-  //   }
-  // };
 
   if (loading) return <p>Loading modules...</p>
   if (error) return <p>Error loading modules: {error.message || error}</p>
@@ -261,12 +183,7 @@ const Modules = () => {
           onClick={togglePlayPause}
           className="relative w-full max-w-4xl h-[500px] mx-auto mt-10 overflow-hidden rounded-lg bg-black cursor-pointer"
         >
-          {/* YouTube Player */}
-          <div
-            ref={playerContainerRef}
-            className="w-full h-full pointer-events-none"
-            id="videoFrame"
-          />
+          <div className="w-full h-full pointer-events-none" id="videoFrame" />
 
           {/* Play Icon Center */}
           {!isPlaying && (
@@ -284,33 +201,25 @@ const Modules = () => {
           )}
 
           {/* Custom Controls */}
-          {isPlaying && (
-            <div
-              onClick={(e) => e.stopPropagation()} // prevent closing video on control click
-              className={`absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 px-4 py-2  ${isPlaying && "hidden"} bg-black/60 text-white rounded`}
-            >
-              <div className="flex gap-2 items-center">
-                {/* <button
-                  onClick={togglePlayPause}
-                  className="px-2 py-1 bg-white/10 rounded"
-                >
-                  ⏸ Pause
-                </button> */}
-                <span className="text-sm">
-                  {formatTime(currentTime)} / {formatTime(duration)}
-                </span>
-              </div>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={`absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 px-4 py-2 bg-black/60 text-white rounded ${
+              !isPlaying ? "hidden" : ""
+            }`}
+          >
+            <span className="text-sm">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </span>
 
-              <input
-                type="range"
-                min="0"
-                max={duration}
-                value={currentTime}
-                onChange={handleSeek}
-                className={`w-full h-[1px] accent-orange-400`}
-              />
-            </div>
-          )}
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              value={currentTime}
+              onChange={handleSeek}
+              className="w-full h-[1px] accent-orange-400"
+            />
+          </div>
 
           {/* Fullscreen Button */}
           <button
@@ -320,6 +229,8 @@ const Modules = () => {
           >
             ⛶
           </button>
+
+          {/* Video Ended Overlay */}
           {playerReady && !isPlaying && currentTime >= duration - 1 && (
             <div className="absolute inset-0 bg-black/90 flex items-center justify-center text-white text-lg font-semibold">
               Video Ended
@@ -393,16 +304,10 @@ const Modules = () => {
         ))}
       </div>
     </>
-<<<<<<< HEAD
   )
 }
 
 export default Modules
-=======
-  );
-};
-
-export default Modules;
 
 // ei code ta main, working nicely
 
