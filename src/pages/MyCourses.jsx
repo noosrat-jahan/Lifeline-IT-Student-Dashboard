@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
-import course from "../assets/course.jpg";
-
-import { BsArrowRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { HiH1 } from "react-icons/hi2";
-import axios from "axios";
-import { dashboardData } from "@/hooks/dashboardData";
-import { Helmet } from "react-helmet-async";
-import useCourses from "@/hooks/useCourses";
+import React from "react"
+import { BsArrowRight } from "react-icons/bs"
+import { Link } from "react-router-dom"
+import { Helmet } from "react-helmet-async"
+import useCourses from "@/hooks/useCourses"
 
 const MyCourses = () => {
-  const { courses, isLoading, error } = useCourses();
+  const { courses, isLoading, error } = useCourses()
 
-  console.log(courses, isLoading, error);
+  console.log(courses, isLoading, error)
 
-  
   return (
     <div>
       <Helmet>
@@ -32,14 +26,12 @@ const MyCourses = () => {
                 key={course._id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden max-w-sm mx-auto flex flex-col items-center justify-center"
               >
-                
                 <img
                   src={course.thumbnail}
                   alt=""
                   className="w-full h-40 object-cover"
                 />
 
-                
                 <div className="p-4">
                   <h2 className="text-xl font-semibold text-gray-800">
                     {course.title}
@@ -51,7 +43,6 @@ const MyCourses = () => {
                     Duration: {course.duration}
                   </p>
 
-                  
                   <Link to={`/courses/${course.route}`}>
                     <button className="flex w-full items-center justify-center text-blue-600 font-medium hover:underline">
                       Details
@@ -65,7 +56,7 @@ const MyCourses = () => {
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default MyCourses;
+export default MyCourses

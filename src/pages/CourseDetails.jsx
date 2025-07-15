@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Plus } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import useCourseDetails from "@/hooks/useCourseDetails";
-import { Helmet } from "react-helmet-async";
+} from "@/components/ui/accordion"
+import { Plus } from "lucide-react"
+import { Link, useParams } from "react-router-dom"
+import axios from "axios"
+import useCourseDetails from "@/hooks/useCourseDetails"
+import { Helmet } from "react-helmet-async"
 
 const CourseDetails = () => {
   const questions = [
@@ -24,21 +24,21 @@ const CourseDetails = () => {
       question: "Why use Tailwind CSS?",
       answer: "click here to join",
     },
-  ];
+  ]
 
-  const { route } = useParams();
-  console.log(route);
+  const { route } = useParams()
+  console.log(route)
 
   // const [instructor, setInstructor] = useState([])
-  const { course, loading, error } = useCourseDetails(route);
+  const { course, loading, error } = useCourseDetails(route)
   // setInstructor(course.instructors)
-  const instructors = course?.instructors;
-  console.log(instructors);
-  const liveSupport = course?.links[0].fb;
-  const liveClasses = course?.links[0].zoom;
-  console.log(course);
+  const instructors = course?.instructors
+  console.log(instructors)
+  const liveSupport = course?.links[0].fb
+  const liveClasses = course?.links[0].zoom
+  console.log(course)
   if (loading)
-    return <p className="text-center mt-10">Loading course details...</p>;
+    return <p className="text-center mt-10">Loading course details...</p>
   return (
     <>
       <Helmet>
@@ -53,7 +53,7 @@ const CourseDetails = () => {
         <div>
           {/* <h1 className="font-bold text-lg">Course & Batch</h1> */}
           <p className="text-2xl font-bold text-[#0B254C] mb-4 ">
-             {course.title}
+            {course.title}
           </p>
           <p className="text-lg font-bold text-[#0B254C]">{course.subtitle}</p>
         </div>
@@ -88,18 +88,16 @@ const CourseDetails = () => {
 
         <h1 className="font-bold text-lg pt-5">Facebook live Support</h1>
 
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full  p-4 mx-auto"
-        >
+        <Accordion type="single" collapsible className="w-full  p-4 mx-auto">
           {liveSupport.map((zoom) => (
             <AccordionItem value={zoom} key={zoom}>
               <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium ">
                 {zoom.title}
               </AccordionTrigger>
               <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-                <Link to={zoom.link} target="blank">{zoom.link}</Link>
+                <Link to={zoom.link} target="blank">
+                  {zoom.link}
+                </Link>
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -113,7 +111,9 @@ const CourseDetails = () => {
                 {liveClass.title}
               </AccordionTrigger>
               <AccordionContent className="text-blue-800 font-bold text-base px-1 pb-4 transition-all duration-300 ease-in-out">
-                <Link to={liveClass.link} target="blank">{liveClass.link}</Link>
+                <Link to={liveClass.link} target="blank">
+                  {liveClass.link}
+                </Link>
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -127,7 +127,7 @@ const CourseDetails = () => {
         </Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CourseDetails;
+export default CourseDetails
