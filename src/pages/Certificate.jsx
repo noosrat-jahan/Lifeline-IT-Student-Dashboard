@@ -9,7 +9,7 @@ const Certificate = () => {
   const [btnloading, setBtnloading] = useState(null)
   const { data, isLoading, error } = dashboardData()
 
-  console.log(data.totalOrders[0].certificate, isLoading, error)
+  console.log(data?.totalOrders[0].certificate, isLoading, error)
 
   const { courses } = useCourses()
   console.log(courses)

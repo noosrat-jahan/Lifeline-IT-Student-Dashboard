@@ -12,6 +12,8 @@ import Modules from "@/pages/Modules";
 import Certificate from "@/pages/Certificate";
 import RegistartionCard from "@/pages/RegistartionCard";
 import ChangePass from "@/pages/ChangePass";
+import PrivateRoute from "./PrivateRoute";
+import NotFound from "@/pages/NotFound";
 
 const Router = createBrowserRouter([
   {
@@ -24,44 +26,48 @@ const Router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <MyDashboard></MyDashboard>,
+        element: <PrivateRoute><MyDashboard></MyDashboard></PrivateRoute>,
       },
       {
         path: "/courses",
-        element: <MyCourses></MyCourses>,
+        element: <PrivateRoute><MyCourses></MyCourses></PrivateRoute> ,
       },
       {
         path: "/courses/:route",
-        element: <CourseDetails></CourseDetails>,
+        element: <PrivateRoute><CourseDetails></CourseDetails></PrivateRoute> ,
       },
       {
         path: "/courses/:route/modules",
-        element: <Modules></Modules>,
+        element: <PrivateRoute><Modules></Modules></PrivateRoute> ,
       },
 
       {
         path: "/orders",
-        element: <MyOrders></MyOrders>,
+        element: <PrivateRoute><MyOrders></MyOrders></PrivateRoute>,
       },
       {
         path: "/notice",
-        element: <Notices></Notices>,
+        element: <PrivateRoute><Notices></Notices></PrivateRoute>,
       },
       {
         path: "/profile",
-        element: <Profile></Profile>,
+        element: <PrivateRoute><Profile></Profile></PrivateRoute>,
       },
       {
         path: "/password-reset",
-        element: <ChangePass></ChangePass>,
+        element: <PrivateRoute><ChangePass></ChangePass></PrivateRoute>,
       },
       {
         path: "/certificate",
-        element: <Certificate></Certificate>,
+        element: <PrivateRoute><Certificate></Certificate></PrivateRoute>,
       },
       {
         path: "/registration-card",
-        element: <RegistartionCard></RegistartionCard>,
+        element: <PrivateRoute><RegistartionCard></RegistartionCard></PrivateRoute>,
+      },
+      {
+        path: "*",
+        element: <NotFound></NotFound>,
       },
     ],
   },
