@@ -1,5 +1,5 @@
 // src/components/PrivateRoute.jsx
-import { Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { dashboardData } from "@/hooks/dashboardData"
 import { useEffect, useState } from "react"
 
@@ -7,6 +7,7 @@ const PrivateRoute = ({ children }) => {
   const { data, isLoading, error } = dashboardData()
   const [isLoggedIn, setIsLoggedIn] = useState(null) // null = loading, true = logged in, false = not
 
+  const navigate = useNavigate()
   useEffect(() => {
     if (data.status != false) {
       setIsLoggedIn(true)
@@ -25,7 +26,8 @@ const PrivateRoute = ({ children }) => {
   // Redirect if not logged in
   if (!isLoggedIn) {
     console.log("User is not logged in, redirecting to login page")
-    window.location.href = import.meta.env.VITE_PUBLIC_PAGE + "/login"
+    // window.location.href = import.meta.env.VITE_PUBLIC_PAGE + "/login"
+    window.location.href = "http://localhost:5174/login";
   }
 
   // Render children if logged in

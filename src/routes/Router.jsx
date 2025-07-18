@@ -15,6 +15,7 @@ import ChangePass from "@/pages/ChangePass";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "@/pages/NotFound";
 
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -70,6 +71,7 @@ const Router = createBrowserRouter([
         element: <NotFound></NotFound>,
       },
     ],
+    
   },
 ]);
 
