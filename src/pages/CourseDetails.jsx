@@ -11,6 +11,8 @@ import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import useCourseDetails from "@/hooks/useCourseDetails"
 import { Helmet } from "react-helmet-async"
+import { dashboardData } from "@/hooks/dashboardData"
+import useCourses from "@/hooks/useCourses"
 
 const CourseDetails = () => {
   const questions = [
@@ -30,7 +32,9 @@ const CourseDetails = () => {
   console.log(route)
 
   // const [instructor, setInstructor] = useState([])
-  const { course, loading, error } = useCourseDetails(route)
+  const { data, isLoading, error } = dashboardData()
+  const { course, loading } = useCourseDetails(route)
+  console.log(data)
   // setInstructor(course.instructors)
   const instructors = course?.instructors
   console.log(instructors)

@@ -25,8 +25,8 @@ const useCourses = () => {
         for (const appcourse of approved) {
           try {
             const res = await axios.get(
-              `${import.meta.env.VITE_API_URL}/api/courses/${
-                appcourse.courseRoute
+              `${import.meta.env.VITE_API_URL}/api/courses/id/${
+                appcourse.courseId
               }`
             );
             console.log(res.data)

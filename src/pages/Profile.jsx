@@ -25,7 +25,7 @@ const Profile = () => {
   // }, [data]);
 
   async function uploadImage(file) {
-    // const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
+    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
     const formData = new FormData();
     formData.append("image", file);
 
@@ -41,59 +41,98 @@ const Profile = () => {
     console.log("Image URL:", data.data.url)
   }
 
-  const handleChangeProfile = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    data.gender = gender;
-    data.dateOfBirth = dob;
-    console.log(data);
+  // const handleChangeProfile = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.currentTarget);
+  //   const data = Object.fromEntries(formData.entries());
+  //   data.gender = gender;
+  //   data.dateOfBirth = dob;
+  //   console.log(data);
 
-    // for image upload
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38";
+  //   // for image upload
+  //   const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38";
 
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-      method: "POST",
-      body: formData,
+  //   const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+  //     method: "POST",
+  //     body: formData,
+  //   });
+
+  //   const result = await res.json();
+  //   if (result?.data?.url) {
+  //     setUploadedImageUrl(result.data.url); // ✅ set URL
+  //   }
+  //   console.log("Image URL:", result.data.url);
+
+
+  //   // submitting profle info
+  //   axios
+  //     .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, result, {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data.success) {
+  //         toast.success(res.data.message, {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           closeOnClick: true,
+  //           draggable: false,
+  //           theme: "dark",
+  //         });
+
+  //         setTimeout(() => {
+  //           navigate("/");
+  //         }, 4000);
+  //       } else {
+  //         toast.error(res.data.message, {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           closeOnClick: true,
+  //           draggable: false,
+  //           theme: "dark",
+  //         });
+  //       }
+  //     });
+  // };
+
+
+const handleChangeProfile = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget);
+  const data = Object.fromEntries(formData.entries());
+  data.gender = gender;
+  data.dateOfBirth = dob;
+  data.image = uploadedImageUrl || data.image || ""; // ✅ Attach uploaded image URL
+
+  // submitting profile info
+  axios
+    .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      if (res.data.success) {
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 4000);
+      } else {
+        toast.error(res.data.message, {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+        });
+      }
+    })
+    .catch((err) => {
+      toast.error("Something went wrong!");
+      console.error(err);
     });
-
-    const result = await res.json();
-    if (result?.data?.url) {
-      setUploadedImageUrl(result.data.url); // ✅ set URL
-    }
-    console.log("Image URL:", result.data.url);
-
-
-    // submitting profle info
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, result, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.success) {
-          toast.success(res.data.message, {
-            position: "top-center",
-            autoClose: 3000,
-            closeOnClick: true,
-            draggable: false,
-            theme: "dark",
-          });
-
-          setTimeout(() => {
-            navigate("/");
-          }, 4000);
-        } else {
-          toast.error(res.data.message, {
-            position: "top-center",
-            autoClose: 3000,
-            closeOnClick: true,
-            draggable: false,
-            theme: "dark",
-          });
-        }
-      });
-  };
+};
 
   return (
     <div>
