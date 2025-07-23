@@ -1,22 +1,22 @@
-import { dashboardData } from "@/hooks/dashboardData";
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { FaUpload } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { dashboardData } from "@/hooks/dashboardData"
+import axios from "axios"
+import React, { useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { FaUpload } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = dashboardData();
+  const { data, isLoading, error } = dashboardData()
 
-  console.log(data, isLoading, error);
+  console.log(data, isLoading, error)
 
-  const [gender, setGender] = useState(data?.gender || "");
-  const [dob, setDob] = useState(data?.dateOfBirth || "");
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [gender, setGender] = useState(data?.gender || "")
+  const [dob, setDob] = useState(data?.dateOfBirth || "")
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // useEffect(() => {
   //   if (data) {
@@ -28,11 +28,17 @@ const Profile = () => {
     const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
     const formData = new FormData();
     formData.append("image", file);
+    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
+    const formData = new FormData()
+    formData.append("image", file)
 
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-      method: "POST",
-      body: formData,
-    })
+    const res = await fetch(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
 
     const data = await res.json()
     if (data?.data?.url) {
@@ -133,6 +139,59 @@ const handleChangeProfile = async (e) => {
       console.error(err);
     });
 };
+  const handleChangeProfile = async (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+    data.gender = gender
+    data.dateOfBirth = dob
+    console.log(data)
+
+    // for image upload
+    const res = await fetch(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+
+    const result = await res.json()
+    if (result?.data?.url) {
+      setUploadedImageUrl(result.data.url) // ✅ set URL
+    }
+    console.log("Image URL:", result.data.url)
+
+    // submitting profle info
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, result, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data)
+        if (res.data.success) {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            draggable: false,
+            theme: "dark",
+          })
+
+          setTimeout(() => {
+            navigate("/")
+          }, 4000)
+        } else {
+          toast.error(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            closeOnClick: true,
+            draggable: false,
+            theme: "dark",
+          })
+        }
+      })
+  }
 
   return (
     <div>
@@ -167,9 +226,9 @@ const handleChangeProfile = async (e) => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
-                  const file = e.target.files[0];
+                  const file = e.target.files[0]
                   if (file) {
-                    uploadImage(file);
+                    uploadImage(file)
                   }
                 }}
                 className="hidden"
@@ -306,7 +365,7 @@ const handleChangeProfile = async (e) => {
       </div>
       <ToastContainer></ToastContainer>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

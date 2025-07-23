@@ -28,6 +28,7 @@ const PrivateRoute = ({ children }) => {
     console.log("User is not logged in, redirecting to login page")
     // window.location.href = import.meta.env.VITE_PUBLIC_PAGE + "/login"
     // window.location.href = "http://localhost:5173/login";
+    // window.location.href = "http://localhost:5174/login";
   }
 
   // Render children if logged in
