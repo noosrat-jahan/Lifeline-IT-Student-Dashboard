@@ -20,7 +20,7 @@ const MyDashboard = () => {
             <MdOutlineShoppingCart />
           </div>
           <h2 className="font-bold text-2xl text-white">
-            {data?.totalOrders.length}
+            {data?.totalOrders?.length}
           </h2>
           <h3 className="text-xl uppercase text-gray-50">Total Orders</h3>
         </div>
