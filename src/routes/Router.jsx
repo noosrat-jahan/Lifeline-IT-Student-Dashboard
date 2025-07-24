@@ -15,7 +15,6 @@ import ChangePass from "@/pages/ChangePass";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "@/pages/NotFound";
 
-
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -27,51 +26,90 @@ const Router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <PrivateRoute><MyDashboard></MyDashboard></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyDashboard></MyDashboard>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/courses",
-        element: <PrivateRoute><MyCourses></MyCourses></PrivateRoute> ,
+        element: (
+          <PrivateRoute>
+            <MyCourses></MyCourses>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/courses/:route",
-        element: <PrivateRoute><CourseDetails></CourseDetails></PrivateRoute> ,
+        element: (
+          <PrivateRoute>
+            <CourseDetails></CourseDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/courses/:route/modules",
-        element: <PrivateRoute><Modules></Modules></PrivateRoute> ,
+        element: (
+          <PrivateRoute>
+            <Modules></Modules>
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/orders",
-        element: <PrivateRoute><MyOrders></MyOrders></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyOrders></MyOrders>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/notice",
-        element: <PrivateRoute><Notices></Notices></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Notices></Notices>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <PrivateRoute><Profile></Profile></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/password-reset",
-        element: <PrivateRoute><ChangePass></ChangePass></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <ChangePass></ChangePass>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/certificate",
-        element: <PrivateRoute><Certificate></Certificate></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Certificate></Certificate>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/registration-card",
-        element: <PrivateRoute><RegistartionCard></RegistartionCard></PrivateRoute>,
-      },
-      {
-        path: "*",
-        element: <NotFound></NotFound>,
+        element: (
+          <PrivateRoute>
+            <RegistartionCard></RegistartionCard>
+          </PrivateRoute>
+        ),
       },
     ],
-    
+  },
+  {
+    path: "*",
+    element: <NotFound></NotFound>,
   },
 ]);
 

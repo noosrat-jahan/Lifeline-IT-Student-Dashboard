@@ -23,9 +23,11 @@ const useCourses = () => {
         for (const appcourse of approved) {
           try {
             const res = await axios.get(
-              `${import.meta.env.VITE_API_URL}/api/courses/id/${appcourse._id}`
+              `${import.meta.env.VITE_API_URL}/api/courses/id/${
+                appcourse.courseId
+              }`
             )
-            console.log(res)
+            console.log(res.data)
             allCourses.push(res.data)
           } catch (error) {
             console.error("Error fetching a course:", error)
