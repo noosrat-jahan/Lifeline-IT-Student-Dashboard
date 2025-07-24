@@ -8,6 +8,7 @@ const PrivateRoute = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(null) // null = loading, true = logged in, false = not
 
   const navigate = useNavigate()
+
   useEffect(() => {
     if (data.status != false) {
       setIsLoggedIn(true)

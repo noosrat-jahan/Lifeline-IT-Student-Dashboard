@@ -25,8 +25,6 @@ const Profile = () => {
   // }, [data]);
 
   async function uploadImage(file) {
-    
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
     const formData = new FormData()
     formData.append("image", file)
 
@@ -67,7 +65,6 @@ const Profile = () => {
   //   }
   //   console.log("Image URL:", result.data.url);
 
-
   //   // submitting profle info
   //   axios
   //     .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, result, {
@@ -99,46 +96,43 @@ const Profile = () => {
   //     });
   // };
 
+  const handleChangeProfile = async (e) => {
+    e.preventDefault()
 
-const handleChangeProfile = async (e) => {
-  e.preventDefault();
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+    data.gender = gender
+    data.dateOfBirth = dob
+    data.image = uploadedImageUrl || data.image || "" // ✅ Attach uploaded image URL
 
-  const formData = new FormData(e.currentTarget);
-  const data = Object.fromEntries(formData.entries());
-  data.gender = gender;
-  data.dateOfBirth = dob;
-  data.image = uploadedImageUrl || data.image || ""; // ✅ Attach uploaded image URL
-
-  // submitting profile info
-  axios
-    .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
-      withCredentials: true,
-    })
-    .then((res) => {
-      if (res.data.success) {
-        toast.success(res.data.message, {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-        });
-        setTimeout(() => {
-          navigate("/");
-        }, 4000);
-      } else {
-        toast.error(res.data.message, {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-        });
-      }
-    })
-    .catch((err) => {
-      toast.error("Something went wrong!");
-      console.error(err);
-    });
-};
-
-  
+    // submitting profile info
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "dark",
+          })
+          setTimeout(() => {
+            navigate("/")
+          }, 4000)
+        } else {
+          toast.error(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "dark",
+          })
+        }
+      })
+      .catch((err) => {
+        toast.error("Something went wrong!")
+        console.error(err)
+      })
+  }
 
   return (
     <div>
