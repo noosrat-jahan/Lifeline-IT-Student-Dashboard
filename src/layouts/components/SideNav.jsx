@@ -1,93 +1,93 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import logo from "../../assets/Website Logo.png";
-import MyCourses from "../../pages/MyCourses";
+import React, { useEffect, useState } from "react"
+import { Link, NavLink, Outlet } from "react-router-dom"
+import logo from "../../assets/Website Logo.png"
+import MyCourses from "../../pages/MyCourses"
 import {
   MdOutlineHome,
   MdOutlineInsertComment,
   MdOutlineShoppingCart,
-} from "react-icons/md";
-import { RiGraduationCapFill } from "react-icons/ri";
+} from "react-icons/md"
+import { RiGraduationCapFill } from "react-icons/ri"
 import {
   FaAngleDoubleUp,
   FaBars,
   FaRegClock,
   FaRegComment,
   FaUserGraduate,
-} from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
-import { GrCertificate } from "react-icons/gr";
-import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5";
+} from "react-icons/fa"
+import { FiHome } from "react-icons/fi"
+import { GrCertificate } from "react-icons/gr"
+import { IoChevronUpCircle, IoNewspaperOutline } from "react-icons/io5"
 
-import student from "../../assets/student.jpg";
+import student from "../../assets/student.jpg"
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import axios from "axios";
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import Menu from "@mui/material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
+import Container from "@mui/material/Container"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
+import MenuItem from "@mui/material/MenuItem"
+import AdbIcon from "@mui/icons-material/Adb"
+import axios from "axios"
 
-import { CiLock } from "react-icons/ci";
-import { FaArrowRightFromBracket } from "react-icons/fa6";
-import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io";
-import { dashboardData } from "@/hooks/dashboardData";
-import useNotice from "@/hooks/useNotice";
-import { AiOutlineMenuFold } from "react-icons/ai";
-import { toast, ToastContainer } from "react-toastify";
+import { CiLock } from "react-icons/ci"
+import { FaArrowRightFromBracket } from "react-icons/fa6"
+import { IoIosPaper, IoMdClose, IoMdLock } from "react-icons/io"
+import { dashboardData } from "@/hooks/dashboardData"
+import useNotice from "@/hooks/useNotice"
+import { AiOutlineMenuFold } from "react-icons/ai"
+import { toast, ToastContainer } from "react-toastify"
 
 const SideNav = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const toggleNavbar = () => setIsOpen(!isOpen);
+  const toggleNavbar = () => setIsOpen(!isOpen)
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto"
     }
     return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
-  const { data, isLoading } = dashboardData();
-  const { notices } = useNotice();
+  const { data, isLoading } = dashboardData()
+  const { notices } = useNotice()
 
   const handleLogout = async () => {
     setTimeout(async () => {
       await axios.get(import.meta.env.VITE_API_URL + `/api/auth/logout`, {
         withCredentials: true,
-      });
-      window.location.href = import.meta.env.VITE_PUBLIC_PAGE + "/login";
-    }, 4000);
+      })
+      window.location.href = import.meta.env.VITE_PUBLIC_PAGE + "/login"
+    }, 4000)
 
     toast.success(`${data?.name} is successfully logged out`, {
       position: "top-center",
@@ -95,8 +95,8 @@ const SideNav = () => {
       closeOnClick: true,
       draggable: false,
       theme: "dark",
-    });
-  };
+    })
+  }
   if (isLoading)
     return (
       <div>
@@ -108,7 +108,7 @@ const SideNav = () => {
           </div>
         </div>
       </div>
-    );
+    )
 
   return (
     <div>
@@ -263,18 +263,16 @@ const SideNav = () => {
             >
               Home
             </Link> */}
-            <Link to="https://lifelineit-d5cbf.web.app/about">About Us</Link>
+            <Link to="https://lifelineitinstitute.com/about">About Us</Link>
 
-            <Link to="https://lifelineit-d5cbf.web.app/success-story">
+            <Link to="https://lifelineitinstitute.com/success-story">
               Success Story
             </Link>
-            <Link to="https://lifelineit-d5cbf.web.app/student-review">
+            <Link to="https://lifelineitinstitute.com/student-review">
               Student Reviews
             </Link>
             <Link to="#">Events</Link>
-            <Link to="https://lifelineit-d5cbf.web.app/contact">
-              Contact Us
-            </Link>
+            <Link to="https://lifelineitinstitute.com/contact">Contact Us</Link>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -479,7 +477,7 @@ const SideNav = () => {
 
       <ToastContainer></ToastContainer>
     </div>
-  );
-};
+  )
+}
 
-export default SideNav;
+export default SideNav

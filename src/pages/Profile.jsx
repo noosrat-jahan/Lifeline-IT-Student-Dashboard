@@ -114,13 +114,13 @@ const Profile = () => {
   // };
 
   const handleChangeProfile = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    data.gender = gender;
-    data.dateOfBirth = dob;
-    data.image = uploadedImageUrl || data.image || ""; // ✅ Attach uploaded image URL
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+    data.gender = gender
+    data.dateOfBirth = dob
+    data.image = uploadedImageUrl || data.image || "" // ✅ Attach uploaded image URL
 
     // submitting profile info
     axios
@@ -133,23 +133,23 @@ const Profile = () => {
             position: "top-center",
             autoClose: 3000,
             theme: "dark",
-          });
+          })
           setTimeout(() => {
-            navigate("/");
-          }, 4000);
+            navigate("/")
+          }, 4000)
         } else {
           toast.error(res.data.message, {
             position: "top-center",
             autoClose: 3000,
             theme: "dark",
-          });
+          })
         }
       })
       .catch((err) => {
-        toast.error("Something went wrong!");
-        console.error(err);
-      });
-  };
+        toast.error("Something went wrong!")
+        console.error(err)
+      })
+  }
 
   return (
     <div>
