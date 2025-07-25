@@ -11,7 +11,7 @@ const Notices = () => {
         <title>Notice — Lifeline IT</title>
       </Helmet>
 
-      <div className="space-y-4 font-baloo">
+      <div className="space-y-4 font-baloo mb-5">
         <h2 className="mb-4 text-2xl text-left font-semibold leading-tight">
           Notices
         </h2>

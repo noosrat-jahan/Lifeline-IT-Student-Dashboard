@@ -11,7 +11,7 @@ const MyOrders = () => {
         <h2 className="mb-4 text-2xl text-left font-semibold leading-tight">
           My Orders
         </h2>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mb-5">
           <table className="min-w-full text-center">
             <colgroup>
               <col />

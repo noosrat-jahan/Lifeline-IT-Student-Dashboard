@@ -156,7 +156,7 @@ const Profile = () => {
       <Helmet>
         <title>My Profile — Lifeline IT</title>
       </Helmet>
-      <div className="max-w-4xl mx-auto  p-6 bg-white rounded-xl shadow-md border border-gray-200">
+      <div className="max-w-4xl mx-auto  mb-5 p-6 bg-white rounded-xl shadow-md border border-gray-200">
         <form
           onSubmit={handleChangeProfile}
           className="flex flex-col justify-center  md:flex-row gap-10"

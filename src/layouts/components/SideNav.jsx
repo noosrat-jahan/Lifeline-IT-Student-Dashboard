@@ -110,6 +110,14 @@ const SideNav = () => {
       </div>
     )
 
+
+     const handleClick = () => {
+    // navigate("/our-courses");
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100); // delay to ensure page loads
+  };
+
   return (
     <div>
       {/* <!-- Navigation --> */}
@@ -174,6 +182,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/dashboard"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <FiHome /> My Dashboard
@@ -182,6 +191,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/orders"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <MdOutlineShoppingCart /> My Orders
@@ -190,6 +200,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/courses"
+                    onClick={handleClick}
                     className="flex items-center gap-2 p-2 rounded-md"
                   >
                     <RiGraduationCapFill /> My Courses
@@ -199,6 +210,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/notice"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <MdOutlineInsertComment /> Notice Board
@@ -211,6 +223,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/registration-card"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <IoNewspaperOutline /> Registration Card
@@ -220,6 +233,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/certificate"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <GrCertificate /> My Certificate
@@ -230,6 +244,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/profile"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <FaUserGraduate /> My Profile
@@ -238,6 +253,7 @@ const SideNav = () => {
                 <li>
                   <NavLink
                     to="/password-reset"
+                    onClick={handleClick}
                     className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                   >
                     <IoMdLock /> Change Password
@@ -386,6 +402,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/dashboard"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <FiHome /> My Dashboard
@@ -394,6 +411,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/orders"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <MdOutlineShoppingCart /> My Orders
@@ -402,6 +420,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/courses"
+                  onClick={handleClick}
                   className="flex items-center gap-2 p-2 rounded-md"
                 >
                   <RiGraduationCapFill /> My Courses
@@ -411,6 +430,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/notice"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <MdOutlineInsertComment /> Notice Board
@@ -423,6 +443,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/registration-card"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <IoNewspaperOutline /> Registration Card
@@ -432,6 +453,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/certificate"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <GrCertificate /> My Certificate
@@ -442,6 +464,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/profile"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <FaUserGraduate /> My Profile
@@ -450,6 +473,7 @@ const SideNav = () => {
               <li>
                 <NavLink
                   to="/password-reset"
+                  onClick={handleClick}
                   className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md"
                 >
                   <IoMdLock /> Change Password
