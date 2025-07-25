@@ -1,22 +1,24 @@
-import { dashboardData } from "@/hooks/dashboardData"
-import axios from "axios"
-import React, { useState } from "react"
-import { Helmet } from "react-helmet-async"
-import { FaUpload } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import { toast, ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import { dashboardData } from "@/hooks/dashboardData";
+import axios from "axios";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { FaUpload } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import imageCompression from "browser-image-compression";
 
 const Profile = () => {
-  const { data, isLoading, error } = dashboardData()
+  const { data, isLoading, error } = dashboardData();
 
-  console.log(data, isLoading, error)
+  console.log(data, isLoading, error);
 
-  const [gender, setGender] = useState(data?.gender || "")
-  const [dob, setDob] = useState(data?.dateOfBirth || "")
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("")
+  const [gender, setGender] = useState(data?.gender || "");
+  const [dob, setDob] = useState(data?.dateOfBirth || "");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (data) {
@@ -25,24 +27,37 @@ const Profile = () => {
   // }, [data]);
 
   async function uploadImage(file) {
-    
-    const apiKey = "8db0bdbb20cf0dcb90da48fe50bcbe38"
-    const formData = new FormData()
-    formData.append("image", file)
+    setLoading(true); // start loading spinner
 
-    const res = await fetch(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
-      {
-        method: "POST",
-        body: formData,
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 1, // Compress to 1MB or less
+        maxWidthOrHeight: 1024, // Resize if too large
+        useWebWorker: true,
+      });
+
+      const formData = new FormData();
+      formData.append("image", compressedFile);
+
+      const res = await fetch(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+
+      if (data?.data?.url) {
+        setUploadedImageUrl(data.data.url); // ✅ set URL
+        console.log("Image URL:", data.data.url);
       }
-    )
-
-    const data = await res.json()
-    if (data?.data?.url) {
-      setUploadedImageUrl(data.data.url) // ✅ set URL
+    } catch (error) {
+      console.error("Image upload failed:", error);
+    } finally {
+      setLoading(false); // stop loading spinner regardless of success/failure
     }
-    console.log("Image URL:", data.data.url)
   }
 
   // const handleChangeProfile = async (e) => {
@@ -66,7 +81,6 @@ const Profile = () => {
   //     setUploadedImageUrl(result.data.url); // ✅ set URL
   //   }
   //   console.log("Image URL:", result.data.url);
-
 
   //   // submitting profle info
   //   axios
@@ -99,46 +113,43 @@ const Profile = () => {
   //     });
   // };
 
+  const handleChangeProfile = async (e) => {
+    e.preventDefault();
 
-const handleChangeProfile = async (e) => {
-  e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    data.gender = gender;
+    data.dateOfBirth = dob;
+    data.image = uploadedImageUrl || data.image || ""; // ✅ Attach uploaded image URL
 
-  const formData = new FormData(e.currentTarget);
-  const data = Object.fromEntries(formData.entries());
-  data.gender = gender;
-  data.dateOfBirth = dob;
-  data.image = uploadedImageUrl || data.image || ""; // ✅ Attach uploaded image URL
-
-  // submitting profile info
-  axios
-    .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
-      withCredentials: true,
-    })
-    .then((res) => {
-      if (res.data.success) {
-        toast.success(res.data.message, {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-        });
-        setTimeout(() => {
-          navigate("/");
-        }, 4000);
-      } else {
-        toast.error(res.data.message, {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-        });
-      }
-    })
-    .catch((err) => {
-      toast.error("Something went wrong!");
-      console.error(err);
-    });
-};
-
-  
+    // submitting profile info
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/api/dashboard/reset`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "dark",
+          });
+          setTimeout(() => {
+            navigate("/");
+          }, 4000);
+        } else {
+          toast.error(res.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "dark",
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error("Something went wrong!");
+        console.error(err);
+      });
+  };
 
   return (
     <div>
@@ -151,7 +162,7 @@ const handleChangeProfile = async (e) => {
           className="flex flex-col justify-center  md:flex-row gap-10"
         >
           {/* Profile Picture */}
-          <div className="flex-shrink-0 flex flex-col items-center">
+          {/* <div className="flex-shrink-0 flex flex-col items-center">
             <img
               src={uploadedImageUrl || data?.image}
               alt="Profile"
@@ -176,6 +187,53 @@ const handleChangeProfile = async (e) => {
                   const file = e.target.files[0]
                   if (file) {
                     uploadImage(file)
+                  }
+                }}
+                className="hidden"
+              />
+            </div>
+            <input
+              type="hidden"
+              name="image"
+              value={uploadedImageUrl || data?.image}
+            />
+          </div> */}
+
+          {/* Profile Picture */}
+        
+          <div className="flex-shrink-0 flex flex-col items-center">
+            {loading ? (
+              // Spinner shown while uploading
+              <div className="w-32 h-32 flex items-center justify-center rounded-full border-4 border-blue-500 shadow">
+               <span class="loader"></span>
+
+              </div>
+            ) : (
+              <img
+                src={uploadedImageUrl || data?.image}
+                alt="Profile"
+                className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow"
+              />
+            )}
+
+            <h3 className="mt-3 font-bold">{data.name}</h3>
+            <h5 className="text-xs text-gray-700">{data.sid}</h5>
+
+            <div className="mt-4">
+              <label
+                htmlFor="imageUpload"
+                className="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg shadow transition duration-200"
+              >
+                <FaUpload />
+              </label>
+              <input
+                id="imageUpload"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    uploadImage(file);
                   }
                 }}
                 className="hidden"
@@ -312,7 +370,7 @@ const handleChangeProfile = async (e) => {
       </div>
       <ToastContainer></ToastContainer>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

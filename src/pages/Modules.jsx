@@ -48,48 +48,113 @@ const Modules = () => {
   }, [course])
 
   // YouTube Iframe API loader and player initializer
-  useEffect(() => {
-    const existingScript = document.getElementById("youtube-api")
-    if (!existingScript) {
-      const script = document.createElement("script")
-      script.id = "youtube-api"
-      script.src = "https://www.youtube.com/iframe_api"
-      document.body.appendChild(script)
-    }
+  // old but imp one 
+  // useEffect(() => {
+  //   const existingScript = document.getElementById("youtube-api")
+  //   if (!existingScript) {
+  //     const script = document.createElement("script")
+  //     script.id = "youtube-api"
+  //     script.src = "https://www.youtube.com/iframe_api"
+  //     document.body.appendChild(script)
+  //   }
 
-    window.onYouTubeIframeAPIReady = () => {
-      if (videoId) {
-        playerRef.current = new window.YT.Player("videoFrame", {
-          videoId,
-          events: {
-            onReady: () => setPlayerReady(true),
-            onStateChange: (event) => {
-              if (event.data === window.YT.PlayerState.PLAYING) {
-                setIsPlaying(true)
-              } else {
-                setIsPlaying(false)
-              }
-            },
-          },
-          playerVars: {
-            autoplay: 0, // prevent autoplay
-            rel: 0,
-            modestbranding: 1,
-            controls: 0,
-            fs: 0,
-            showinfo: 0,
-            disablekb: 1,
-          },
-        })
-      }
-    }
+  //   window.onYouTubeIframeAPIReady = () => {
+  //     if (videoId) {
+  //       playerRef.current = new window.YT.Player("videoFrame", {
+  //         videoId,
+  //         events: {
+  //           onReady: () => setPlayerReady(true),
+  //           onStateChange: (event) => {
+  //             if (event.data === window.YT.PlayerState.PLAYING) {
+  //               setIsPlaying(true)
+  //             } else {
+  //               setIsPlaying(false)
+  //             }
+  //           },
+  //         },
+  //         playerVars: {
+  //           autoplay: 0, // prevent autoplay
+  //           rel: 0,
+  //           modestbranding: 1,
+  //           controls: 0,
+  //           fs: 0,
+  //           showinfo: 0,
+  //           disablekb: 1,
+  //         },
+  //       })
+  //     }
+  //   }
 
-    return () => {
-      window.onYouTubeIframeAPIReady = null
-    }
-  }, [videoId])
+  //   return () => {
+  //     window.onYouTubeIframeAPIReady = null
+  //   }
+  // }, [videoId])
 
   // Toggle play/pause
+  
+  
+
+  // new one for testing 
+  useEffect(() => {
+  const initPlayer = () => {
+    if (playerRef.current) {
+      playerRef.current.destroy() // ✅ cleanup old player
+    }
+
+    playerRef.current = new window.YT.Player("videoFrame", {
+      videoId,
+      events: {
+        onReady: () => setPlayerReady(true),
+        onStateChange: (event) => {
+          if (event.data === window.YT.PlayerState.PLAYING) {
+            setIsPlaying(true)
+          } else {
+            setIsPlaying(false)
+          }
+        },
+      },
+      playerVars: {
+        autoplay: 0,
+        rel: 0,
+        modestbranding: 1,
+        controls: 0,
+        fs: 0,
+        showinfo: 0,
+        disablekb: 1,
+      },
+    })
+  }
+
+  const existingScript = document.getElementById("youtube-api")
+  if (!existingScript) {
+    const script = document.createElement("script")
+    script.id = "youtube-api"
+    script.src = "https://www.youtube.com/iframe_api"
+    document.body.appendChild(script)
+
+    window.onYouTubeIframeAPIReady = () => {
+      if (videoId) initPlayer()
+    }
+  } else {
+    if (window.YT && window.YT.Player) {
+      if (videoId) initPlayer()
+    } else {
+      window.onYouTubeIframeAPIReady = () => {
+        if (videoId) initPlayer()
+      }
+    }
+  }
+
+  return () => {
+    if (playerRef.current) {
+      playerRef.current.destroy() // ✅ cleanup
+      playerRef.current = null
+    }
+    window.onYouTubeIframeAPIReady = null
+  }
+}, [videoId])
+
+
   const togglePlayPause = () => {
     if (!playerRef.current) return
     const state = playerRef.current.getPlayerState()
@@ -188,9 +253,9 @@ const Modules = () => {
           {/* Play Icon Center */}
           {!isPlaying && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-white/20 hover:bg-white/30 rounded-full p-6 transition duration-200">
+              <div className="bg-amber-500/20 hover:bg-white/30 rounded-full p-6 transition duration-200">
                 <svg
-                  className="w-10 h-10 text-white"
+                  className="w-12 h-12 text-red-800"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -231,11 +296,11 @@ const Modules = () => {
           </button>
 
           {/* Video Ended Overlay */}
-          {playerReady && !isPlaying && currentTime >= duration - 1 && (
+          {/* {playerReady && !isPlaying && currentTime >= duration - 1 && (
             <div className="absolute inset-0 bg-black/90 flex items-center justify-center text-white text-lg font-semibold">
               Video Ended
             </div>
-          )}
+          )} */}
         </div>
       ) : (
         <p className="text-red-500 mt-5">Invalid or missing video link.</p>
@@ -308,6 +373,7 @@ const Modules = () => {
 }
 
 export default Modules
+
 
 // ei code ta main, working nicely
 

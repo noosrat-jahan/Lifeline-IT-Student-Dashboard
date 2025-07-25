@@ -24,8 +24,9 @@ const MyCourses = () => {
             {courses.map((course) => (
               <div
                 key={course._id}
-                className="bg-white rounded-2xl shadow-md overflow-hidden max-w-sm mx-auto flex flex-col items-center justify-center"
+                className="w-full xl:max-w-lg h-full rounded-xl overflow-hidden shadow-md bg-white relative border border-[#f09619e2] hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer flex flex-col justify-between"
               >
+                <div className="h-2 bg-gradient-to-r from-[#F09819] via-[#EDDE5D] to-[#F09819]"></div>
                 <img
                   src={course.thumbnail}
                   alt=""
@@ -44,7 +45,7 @@ const MyCourses = () => {
                   </p>
 
                   <Link to={`/courses/${course.route}`}>
-                    <button className="flex w-full items-center justify-center text-blue-600 font-medium hover:underline">
+                    <button className="flex w-full items-center justify-center text-blue-600 font-bold hover:underline">
                       Details
                       <BsArrowRight className="ml-2 w-4 h-4" />
                     </button>

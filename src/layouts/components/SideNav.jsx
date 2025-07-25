@@ -132,7 +132,7 @@ const SideNav = () => {
           >
             <FaAngleDoubleUp />
           </div>
-          {isOpen && (
+           {isOpen && (
             <div
               className="fixed inset-0 bg-black bg-opacity-50 z-40"
               onClick={() => setIsOpen(false)}
@@ -377,7 +377,7 @@ const SideNav = () => {
       </section>
 
       {/* <!-- Main Layout --> */}
-      <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 lg:mt-10 px-2 lg:px-4">
+      <div className="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 lg:mt-5 px-2 lg:px-4">
         {/* <!-- Sidebar --> */}
         <aside className="lg:w-1/4 w-full hidden lg:block">
           <div className="bg-white shadow-card rounded-xl p-6">
