@@ -15,24 +15,11 @@ import { dashboardData } from "@/hooks/dashboardData"
 import useCourses from "@/hooks/useCourses"
 
 const CourseDetails = () => {
-  const questions = [
-    {
-      id: "item-1",
-      question: "What is React?",
-      answer: "click here to join",
-    },
-    {
-      id: "item-2",
-      question: "Why use Tailwind CSS?",
-      answer: "click here to join",
-    },
-  ]
-
   const { route } = useParams()
   console.log(route)
 
   // const [instructor, setInstructor] = useState([])
-  const { data, isLoading, error } = dashboardData()
+  const { data } = dashboardData()
   const { course, loading } = useCourseDetails(route)
   console.log(data)
   // setInstructor(course.instructors)
@@ -92,11 +79,7 @@ const CourseDetails = () => {
 
         <h1 className="font-bold text-lg pt-5">Facebook live Support</h1>
 
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full  p-1 mx-auto"
-        >
+        <Accordion type="single" collapsible className="w-full  p-1 mx-auto">
           {liveSupport.map((zoom) => (
             <AccordionItem value={zoom} key={zoom}>
               <AccordionTrigger className="flex justify-between items-center text-left text-lg font-medium ">
